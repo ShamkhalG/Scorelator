@@ -9,6 +9,8 @@ export const subjectCSS = StyleSheet.create({
   },
 
   top: {
+    borderBottomWidth: 2,
+    borderColor: "#E5E5E5",
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 3,
@@ -25,7 +27,19 @@ export const subjectCSS = StyleSheet.create({
   },
 
   middle: {
+    borderBottomWidth: 2,
+    borderColor: "#E5E5E5",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 3,
+    paddingLeft: 20,
+    paddingRight: 20
+  },
 
+  middleText: {
+    color: "#E5E5E5",
+    fontSize: 20,
+    textAlign: "center"
   },
 
   bottom: {
