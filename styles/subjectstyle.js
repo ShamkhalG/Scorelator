@@ -23,7 +23,8 @@ export const subjectCSS = StyleSheet.create({
 
   topText: {
     color: "#E5E5E5",
-    fontSize: 25
+    fontSize: 25,
+    fontWeight: "bold"
   },
 
   middle: {
@@ -43,7 +44,15 @@ export const subjectCSS = StyleSheet.create({
   },
 
   bottom: {
+    paddingTop: 8,
+    paddingBottom: 8
+  },
 
+  bottomText: {
+    color: "#E5E5E5",
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center"
   },
 
   text: {

@@ -56,7 +56,7 @@ export default function Subject({ subjectProps }) {
       </View>
 
       <View style = {subjectCSS.bottom}>
-        
+        <Text style = {subjectCSS.bottomText}> Total: {computable.total !== 183 ? computable.total : "?"} / {subjectProps.coefficient} ({computable.totalPercentage !== 183 ? computable.totalPercentage : "?"}%) </Text>
       </View>
     </View>
   )
