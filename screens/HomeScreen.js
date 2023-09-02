@@ -6,9 +6,9 @@ export default function HomeScreen() {
   const subjectProps = {
     name: "Mathematics",
     coefficient: 6,
-    cc1Coef: 1.5,
-    cc2Coef: 2,
-    cc3Coef: 2.5,
+    CC1Coef: 1.5,
+    CC2Coef: 2,
+    CC3Coef: 2.5,
   }
 
   return (
