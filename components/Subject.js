@@ -22,40 +22,55 @@ export default function Subject({ subjectProps }) {
   const [totalPercentage, setTotalPercentage] = useState(183);
 
   useEffect(() => {
-    // Calculate CC1 points
+    // Calculates CC1 points
     if (CC1Score !== 183) {
       const newCC1Final = (CC1Score / 20) * subjectProps.CC1Coef;
       const newCC1Percentage = (newCC1Final / subjectProps.CC1Coef) * 100;
-      setCC1Final(newCC1Final);
-      setCC1Percentage(newCC1Percentage);
+
+      // Round the values to two decimal places if required
+      const formattedCC1Final = newCC1Final % 1 === 0 ? parseFloat(newCC1Final.toFixed(0)) : parseFloat(newCC1Final.toFixed(3));
+      const formattedCC1Percentage = newCC1Percentage % 1 === 0 ? parseFloat(newCC1Percentage.toFixed(0)) : parseFloat(newCC1Percentage.toFixed(2));
+
+      setCC1Final(formattedCC1Final);
+      setCC1Percentage(formattedCC1Percentage);
     } else {
       setCC1Final(183);
       setCC1Percentage(183);
     }
 
-    // Calculate CC2 points
+    // Calculates CC2 points
     if (CC2Score !== 183) {
       const newCC2Final = (CC2Score / 20) * subjectProps.CC2Coef;
       const newCC2Percentage = (newCC2Final / subjectProps.CC2Coef) * 100;
-      setCC2Final(newCC2Final);
-      setCC2Percentage(newCC2Percentage);
+
+      // Round the values to two decimal places
+      const formattedCC2Final = newCC2Final % 1 === 0 ? parseFloat(newCC2Final.toFixed(0)) : parseFloat(newCC2Final.toFixed(3));
+      const formattedCC2Percentage = newCC2Percentage % 1 === 0 ? parseFloat(newCC2Percentage.toFixed(0)) : parseFloat(newCC2Percentage.toFixed(2));
+
+      setCC2Final(formattedCC2Final);
+      setCC2Percentage(formattedCC2Percentage);
     } else {
       setCC2Final(183);
       setCC2Percentage(183);
     }
 
-    // Calculate CC3 points
+    // Calculates CC3 points
     if (CC3Score !== 183) {
       const newCC3Final = (CC3Score / 20) * subjectProps.CC3Coef;
       const newCC3Percentage = (newCC3Final / subjectProps.CC3Coef) * 100;
-      setCC3Final(newCC3Final);
-      setCC3Percentage(newCC3Percentage);
+
+      // Round the values to two decimal places
+      const formattedCC3Final = newCC3Final % 1 === 0 ? parseFloat(newCC3Final.toFixed(0)) : parseFloat(newCC3Final.toFixed(3));
+      const formattedCC3Percentage = newCC3Percentage % 1 === 0 ? parseFloat(newCC3Percentage.toFixed(0)) : parseFloat(newCC3Percentage.toFixed(2));
+
+      setCC3Final(formattedCC3Final);
+      setCC3Percentage(formattedCC3Percentage);
     } else {
       setCC3Final(183);
       setCC3Percentage(183);
     }
 
-    // Calculate the total received points out of subject coefficient
+    // Calculates total points out of subject coefficient
     if (CC1Score !== 183 || CC2Score !== 183 || CC3Score !== 183) {
       let newTotal = 0;
 
@@ -80,13 +95,11 @@ export default function Subject({ subjectProps }) {
       setTotal(183);
     }
 
-    // Calculate percentage of total points out of subject coefficient
+    // Calculate total percentage from total points
     if (total !== 183) {
       const newTotalPercentage = (total / subjectProps.coefficient) * 100;
       
-      const formattedTotalPercentage = Number.isInteger(newTotalPercentage)
-      ? newTotalPercentage.toString() // Convert to string to remove decimal point
-      : newTotalPercentage.toFixed(2); // Keep two decimal places for non-integer values
+      const formattedTotalPercentage = newTotalPercentage % 1 === 0 ? parseFloat(newTotalPercentage.toFixed(0)) : parseFloat(newTotalPercentage.toFixed(2));
 
       setTotalPercentage(formattedTotalPercentage);
     } else {
