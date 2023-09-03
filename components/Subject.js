@@ -1,6 +1,7 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import { subjectCSS } from "../styles/subjectstyle";
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Subject({ subjectProps }) {
   // Values from inputs
@@ -108,7 +109,7 @@ export default function Subject({ subjectProps }) {
   }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total]);
 
   const CC1Handler = (CC1result) => {
-    CC1result = CC1result.replace(/[^0-9]/g, '');
+    console.log(CC1result);
     if (CC1result === ""){
       setCC1Score(183);  
     } else {
@@ -117,7 +118,6 @@ export default function Subject({ subjectProps }) {
   }
 
   const CC2Handler = (CC2result) => {
-    CC2result = CC2result.replace(/[^0-9]/g, '');
     if (CC2result === ""){
       setCC2Score(183);  
     } else {
@@ -126,7 +126,6 @@ export default function Subject({ subjectProps }) {
   }
 
   const CC3Handler = (CC3result) => {
-    CC3result = CC3result.replace(/[^0-9]/g, '');
     if (CC3result === ""){
       setCC3Score(183);  
     } else {
@@ -134,15 +133,24 @@ export default function Subject({ subjectProps }) {
     }
   }
 
+  const openSetting = () => {
+    // TODO: Opens settings of a subject
+    // TODO: It should pass subjectProps to the new window
+    // TODO: New window also should be able to pass updated subjectProps back to Subject component
+  }
+
   return (
     <View style = {subjectCSS.container}>
       <View style = {subjectCSS.top}>
-        {/* //? FIXME: If the name is too long, it might not fit in the table */}
+        {/* //? QUESTION: If the name is too long, it might not fit in the table */}
         <Text style = {subjectCSS.topText}> {subjectProps.name} </Text>
         <View style = {subjectCSS.topRight}>
           <Text style = {subjectCSS.topText}> {subjectProps.coefficient} </Text>
-          {/* //! TODO: <Text> below is actually a button to the settings of a subject */}
-          <Text style = {subjectCSS.topText}> S </Text>
+          <View style={subjectCSS.setting}>
+            <TouchableOpacity onPress = {openSetting}>
+              <MaterialIcons name="settings" size={28} color="#E5E5E5" />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
 

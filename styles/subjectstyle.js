@@ -21,6 +21,13 @@ export const subjectCSS = StyleSheet.create({
     flexDirection: "row"
   },
 
+  setting: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+
   topText: {
     color: "#E5E5E5",
     fontSize: 25,

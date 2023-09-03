@@ -1,4 +1,4 @@
-import { View, Text } from "react-native"
+import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native"
 import { homeCSS } from "../styles/homestyle"
 import Subject from "../components/Subject"
 
@@ -11,10 +11,16 @@ export default function HomeScreen() {
     CC3Coef: 2.5,
   }
 
+  const KeyboardRemover = () => {
+    Keyboard.dismiss();
+  }
+
   return (
-    <View style = {homeCSS.container}>
-      <Text style = {homeCSS.text}> Home </Text>
-      <Subject subjectProps = {subjectProps} />
-    </View>
+    <TouchableWithoutFeedback onPress = {KeyboardRemover}>
+      <View style = {homeCSS.container}>
+        <Text style = {homeCSS.text}> Home </Text>
+        <Subject subjectProps = {subjectProps} />
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
