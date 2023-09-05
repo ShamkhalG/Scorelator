@@ -50,6 +50,13 @@ export const subjectCSS = StyleSheet.create({
     textAlign: "center"
   },
 
+  middleInput: {
+    color: "#FF951D",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+
   bottom: {
     paddingTop: 8,
     paddingBottom: 8

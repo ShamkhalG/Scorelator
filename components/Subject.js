@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Modal } from "react-native";
 import { useState, useEffect } from "react";
 import { subjectCSS } from "../styles/subjectstyle";
 import { MaterialIcons } from '@expo/vector-icons';
@@ -21,6 +21,9 @@ export default function Subject({ subjectProps }) {
   
   const [total, setTotal] = useState(183);
   const [totalPercentage, setTotalPercentage] = useState(183);
+
+  // Modal visibility state
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     // Calculates CC1 points
@@ -91,7 +94,9 @@ export default function Subject({ subjectProps }) {
         newTotal = 183;
       }
 
-      setTotal(newTotal);
+      const formattedNewTotal = newTotal % 1 === 0 ? parseFloat(newTotal.toFixed(0)) : parseFloat(newTotal.toFixed(3))
+
+      setTotal(formattedNewTotal);
     } else {
       setTotal(183);
     }
@@ -109,7 +114,6 @@ export default function Subject({ subjectProps }) {
   }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total]);
 
   const CC1Handler = (CC1result) => {
-    console.log(CC1result);
     if (CC1result === ""){
       setCC1Score(183);  
     } else {
@@ -137,12 +141,17 @@ export default function Subject({ subjectProps }) {
     // TODO: Opens settings of a subject
     // TODO: It should pass subjectProps to the new window
     // TODO: New window also should be able to pass updated subjectProps back to Subject component
-  }
+    setIsModalVisible(true);
+  };
+
+  const closeSetting = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <View style = {subjectCSS.container}>
       <View style = {subjectCSS.top}>
-        {/* //? QUESTION: If the name is too long, it might not fit in the table */}
+        {/* QUESTION: If the name is too long, it might not fit in the table */}
         <Text style = {subjectCSS.topText}> {subjectProps.name} </Text>
         <View style = {subjectCSS.topRight}>
           <Text style = {subjectCSS.topText}> {subjectProps.coefficient} </Text>
@@ -157,9 +166,11 @@ export default function Subject({ subjectProps }) {
       <View style = {subjectCSS.middle}>
         <View>
           <Text style = {subjectCSS.middleText}> CC1 </Text>
+          {/* FIXME: Change the CSS of TextInput */}
           <TextInput 
             onChangeText = {CC1Handler}
             keyboardType = "numeric"
+            style = {subjectCSS.middleInput}
           />
           <Text style = {subjectCSS.middleText}> {CC1Final !== 183 ? CC1Final : "?"} / {subjectProps.CC1Coef} </Text>
           <Text style = {subjectCSS.middleText}> {CC1Percentage !== 183 ? CC1Percentage : "?"} % </Text>
@@ -167,9 +178,11 @@ export default function Subject({ subjectProps }) {
         
         <View>
           <Text style = {subjectCSS.middleText}> CC2 </Text>
+          {/* FIXME: Change the CSS of TextInput */}
           <TextInput 
             onChangeText = {CC2Handler}
             keyboardType = "numeric"
+            style = {subjectCSS.middleInput}
           />
           <Text style = {subjectCSS.middleText}> {CC2Final !== 183 ? CC2Final : "?"} / {subjectProps.CC2Coef} </Text>
           <Text style = {subjectCSS.middleText}> {CC2Percentage !== 183 ? CC2Percentage : "?"} % </Text>
@@ -177,9 +190,11 @@ export default function Subject({ subjectProps }) {
         
         <View>
           <Text style = {subjectCSS.middleText}> CC3 </Text>
+          {/* FIXME: Change the CSS of TextInput */}
           <TextInput 
             onChangeText = {CC3Handler}
             keyboardType = "numeric"
+            style = {subjectCSS.middleInput}
           />
           <Text style = {subjectCSS.middleText}> {CC3Final !== 183 ? CC3Final : "?"} / {subjectProps.CC3Coef} </Text>
           <Text style = {subjectCSS.middleText}> {CC3Percentage !== 183 ? CC3Percentage : "?"} % </Text>
@@ -189,6 +204,25 @@ export default function Subject({ subjectProps }) {
       <View style = {subjectCSS.bottom}>
         <Text style = {subjectCSS.bottomText}> Total: {total !== 183 ? total : "?"} / {subjectProps.coefficient} ({totalPercentage !== 183 ? totalPercentage : "?"}%) </Text>
       </View>
+
+       {/* Modal */}
+       <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeSetting}
+      >
+        {/* Your modal content goes here */}
+        <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <View style = {{ backgroundColor: 'white', width: '90%', height: '90%' }}>
+            {/* Add your modal content here */}
+            <Text>This is your modal content.</Text>
+            <TouchableOpacity onPress={closeSetting}>
+              <Text>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }

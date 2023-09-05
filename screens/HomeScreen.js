@@ -1,4 +1,4 @@
-import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native"
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Keyboard } from "react-native"
 import { homeCSS } from "../styles/homestyle"
 import Subject from "../components/Subject"
 
@@ -11,16 +11,30 @@ export default function HomeScreen() {
     CC3Coef: 2.5,
   }
 
-  const KeyboardRemover = () => {
+  const keyboardRemover = () => {
     Keyboard.dismiss();
   }
 
+  const addSubject = () => {
+    // TODO: Opens settings, where a subject can be added to the list
+    console.log("Opened settings to add subject")
+  }
+
   return (
-    <TouchableWithoutFeedback onPress = {KeyboardRemover}>
+    <TouchableWithoutFeedback onPress = {keyboardRemover}>
       <View style = {homeCSS.container}>
-        <Text style = {homeCSS.text}> Home </Text>
+        {/* REMOVE: Remove "Home" text */}
+        <Text style = {homeCSS.homeText}> Home </Text>
         <Subject subjectProps = {subjectProps} />
+
+        {/* TODO: + button to add a subject*/}
+        <TouchableOpacity onPress = {addSubject}>
+          <View style = {homeCSS.addSubject}>
+            <Text style = {homeCSS.text}>+</Text>
+          </View>
+        </TouchableOpacity>
       </View>
+
     </TouchableWithoutFeedback>
   )
 }
