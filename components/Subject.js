@@ -205,17 +205,15 @@ export default function Subject({ subjectProps }) {
         <Text style = {subjectCSS.bottomText}> Total: {total !== 183 ? total : "?"} / {subjectProps.coefficient} ({totalPercentage !== 183 ? totalPercentage : "?"}%) </Text>
       </View>
 
-       {/* Modal */}
-       <Modal
+       {/* TODO: Make settings for changing the name of subject and its coefficients*/}
+      <Modal
         visible={isModalVisible}
         animationType="slide"
         transparent={true}
         onRequestClose={closeSetting}
       >
-        {/* Your modal content goes here */}
         <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <View style = {{ backgroundColor: 'white', width: '90%', height: '90%' }}>
-            {/* Add your modal content here */}
             <Text>This is your modal content.</Text>
             <TouchableOpacity onPress={closeSetting}>
               <Text>Close</Text>

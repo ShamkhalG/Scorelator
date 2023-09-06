@@ -1,11 +1,16 @@
-import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Keyboard } from "react-native"
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Keyboard, Modal } from "react-native"
+import { useState } from "react";
 import { homeCSS } from "../styles/homestyle"
 import Subject from "../components/Subject"
 
 export default function HomeScreen() {
+  const [isAddSubjectModalVisible, setIsAddSubjectModalVisible] = useState(false);
+  
   const subjectProps = {
     name: "Mathematics",
-    coefficient: 6,
+    get coefficient() {
+      return this.CC1Coef + this.CC2Coef + this.CC3Coef;
+    },
     CC1Coef: 1.5,
     CC2Coef: 2,
     CC3Coef: 2.5,
@@ -15,9 +20,20 @@ export default function HomeScreen() {
     Keyboard.dismiss();
   }
 
+  const openAddSubject = () => {
+    setIsAddSubjectModalVisible(true);
+    console.log("Opened add subject.")
+  }
+  
+  const closeAddSubject = () => {
+    setIsAddSubjectModalVisible(false);
+    console.log("Closed add subject.")
+  }
+  
   const addSubject = () => {
-    // TODO: Opens settings, where a subject can be added to the list
-    console.log("Opened settings to add subject")
+    // TODO: Adds the subject to the database, then closes the model
+    console.log("Added the subject to the database...")
+    setIsAddSubjectModalVisible(false);
   }
 
   return (
@@ -28,13 +44,28 @@ export default function HomeScreen() {
         <Subject subjectProps = {subjectProps} />
 
         {/* TODO: + button to add a subject*/}
-        <TouchableOpacity onPress = {addSubject}>
-          <View style = {homeCSS.addSubject}>
+        <TouchableOpacity style = {homeCSS.touchable} onPress = {openAddSubject}>
+          <View style = {homeCSS.add}>
             <Text style = {homeCSS.text}>+</Text>
           </View>
         </TouchableOpacity>
+      
+        <Modal
+          visible={isAddSubjectModalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={closeAddSubject}
+        >
+          <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style = {{ backgroundColor: 'white', width: '90%', height: '90%' }}>
+              <Text>This is your modal content.</Text>
+              <TouchableOpacity onPress={closeAddSubject}>
+                <Text>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
-
     </TouchableWithoutFeedback>
   )
 }

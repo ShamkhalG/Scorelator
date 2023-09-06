@@ -8,16 +8,23 @@ export const homeCSS = StyleSheet.create({
     paddingTop: 50
   },
 
-  addSubject: {
-    position: "absolute",
-    top: 370,
-    left: 90,
+  touchable: {
+    borderRadius: 50,
+    height: 80, 
+    position: "absolute", 
+    right: 20, 
+    top: 740,
+    width: 80
+  },
+
+  add: {
+    alignItems: "center",
     backgroundColor: "#1F5435",
     borderRadius: 50,
-    padding: 10,
-    width: 80,
     height: 80,
-    alignItems: "center"
+    padding: 10,
+    position: "absolute",
+    width: 80
   },
 
   text: {
@@ -25,7 +32,7 @@ export const homeCSS = StyleSheet.create({
     fontSize: 40,
   },
 
-  // REMOVE: Remove this. It was only for an example
+  // REMOVE: Remove this. It's only for an example
   homeText: {
     color: "#E5E5E5",
     fontSize: 30,
