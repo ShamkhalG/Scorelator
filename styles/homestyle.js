@@ -37,5 +37,38 @@ export const homeCSS = StyleSheet.create({
     color: "#E5E5E5",
     fontSize: 30,
     paddingBottom: 50
+  },
+
+  modalContainer: {
+    backgroundColor: "#171717", 
+    height: '100%',
+    padding: 20,
+    width: '100%'
+  },
+
+  modalCloser: {
+    alignItems: "flex-end",
+  },
+
+  modalInputs: {
+    flex: 1,
+    justifyContent: "center",
+  },
+
+  modalSingleInput: {
+    flexDirection: "row",
+    marginBottom: 50
+  },
+  
+  modalSingleInputText: {
+    color: "#E5E5E5",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+
+  modalTextInput: {
+    backgroundColor: "green",
+    color: "#E5E5E5",
+    width: "10%"
   }
 })

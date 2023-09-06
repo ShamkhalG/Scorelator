@@ -172,6 +172,7 @@ export default function Subject({ subjectProps }) {
             keyboardType = "numeric"
             style = {subjectCSS.middleInput}
           />
+          {/* FIXME: If a coefficient is not used, it should show "X" */}
           <Text style = {subjectCSS.middleText}> {CC1Final !== 183 ? CC1Final : "?"} / {subjectProps.CC1Coef} </Text>
           <Text style = {subjectCSS.middleText}> {CC1Percentage !== 183 ? CC1Percentage : "?"} % </Text>
         </View>
@@ -184,6 +185,7 @@ export default function Subject({ subjectProps }) {
             keyboardType = "numeric"
             style = {subjectCSS.middleInput}
           />
+          {/* FIXME: If a coefficient is not used, it should show "X" */}
           <Text style = {subjectCSS.middleText}> {CC2Final !== 183 ? CC2Final : "?"} / {subjectProps.CC2Coef} </Text>
           <Text style = {subjectCSS.middleText}> {CC2Percentage !== 183 ? CC2Percentage : "?"} % </Text>
         </View>
@@ -196,6 +198,7 @@ export default function Subject({ subjectProps }) {
             keyboardType = "numeric"
             style = {subjectCSS.middleInput}
           />
+          {/* FIXME: If a coefficient is not used, it should show "X" */}
           <Text style = {subjectCSS.middleText}> {CC3Final !== 183 ? CC3Final : "?"} / {subjectProps.CC3Coef} </Text>
           <Text style = {subjectCSS.middleText}> {CC3Percentage !== 183 ? CC3Percentage : "?"} % </Text>
         </View>
