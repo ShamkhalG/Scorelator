@@ -51,6 +51,7 @@ export const subjectCSS = StyleSheet.create({
   },
 
   middleInput: {
+    backgroundColor: "green",
     color: "#FF951D",
     fontSize: 20,
     fontWeight: "bold",

@@ -27,18 +27,25 @@ export default function HomeScreen() {
 
   const openAddSubject = () => {
     setIsAddSubjectModalVisible(true);
+    // REMOVE: Console.log
     console.log("Opened add subject.")
   }
   
   const closeAddSubject = () => {
     setIsAddSubjectModalVisible(false);
+    // REMOVE: Console.log
     console.log("Closed add subject.")
   }
   
   const addSubject = () => {
     // TODO: Adds the subject to the database, then closes the model
     // IMPORTANT: It should pass the type check (no additional characters like strings, only numbers)
-    console.log("Added the subject to the database...")
+    // REMOVE: Console.log
+    console.log("Added the subject to the database...");
+    console.log("Name: " + newName);
+    console.log("CC1 coefficient: " + newCC1);
+    console.log("CC2 coefficient: " + newCC2);
+    console.log("CC3 coefficient: " + newCC3);
     setIsAddSubjectModalVisible(false);
   }
 
@@ -72,12 +79,16 @@ export default function HomeScreen() {
                   </TouchableOpacity>
                 </View>
 
+                <View style = {homeCSS.addingInfo}>
+                  <Text style = {homeCSS.addingInfoText}> Add a new subject </Text>
+                </View>
+
                 <View style = {homeCSS.modalInputs}>
                   <View style = {homeCSS.modalSingleInput}>
                     <Text style = {homeCSS.modalSingleInputText}>Name: </Text>
                     <TextInput 
                       onChangeText = {(enteredName) => {setNewName(enteredName)}}
-                      style = {homeCSS.modalTextInput}
+                      style = {homeCSS.modalTextInputName}
                     />
                   </View>
 
@@ -106,6 +117,22 @@ export default function HomeScreen() {
                       keyboardType = "numeric"
                       style = {homeCSS.modalTextInput}
                     />
+                  </View>
+
+                  {/* Info text about unused coefficients */}
+                  <View style = {homeCSS.unusedInfo}>
+                    <Text style = {homeCSS.unusedInfoText}> 
+                      Info: If a coefficient will not be used, leave it blank. 
+                    </Text>
+                  </View>
+
+                  {/* Button that adds the new written props to the subject, then closes the modal */}
+                  <View style = {{ alignItems: "center" }}>
+                    <View style = {homeCSS.addButton}>
+                      <TouchableOpacity onPress = {addSubject}>
+                        <Text style = {homeCSS.addButtonText}> Add </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
                 {/* IMPORTANT: Give info about leaving a coefficient blank if it won't be used */}

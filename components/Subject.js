@@ -4,6 +4,7 @@ import { subjectCSS } from "../styles/subjectstyle";
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Subject({ subjectProps }) {
+  // TODO: Add warning about valid scores being from 0 to 20
   // Values from inputs
   const [CC1Score, setCC1Score] = useState(183);
   const [CC2Score, setCC2Score] = useState(183);
@@ -141,6 +142,7 @@ export default function Subject({ subjectProps }) {
     // TODO: Opens settings of a subject
     // TODO: It should pass subjectProps to the new window
     // TODO: New window also should be able to pass updated subjectProps back to Subject component
+    // TODO: It should be able to delete the subject from the list
     setIsModalVisible(true);
   };
 

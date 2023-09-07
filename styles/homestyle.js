@@ -50,8 +50,18 @@ export const homeCSS = StyleSheet.create({
     alignItems: "flex-end",
   },
 
+  addingInfo: {
+    alignItems: "center",
+    marginTop: 40
+  },
+
+  addingInfoText: {
+    color: "#E5E5E5",
+    fontSize: 38
+  },
+
   modalInputs: {
-    flex: 1,
+    flex: 1.5,
     justifyContent: "center",
   },
 
@@ -67,8 +77,46 @@ export const homeCSS = StyleSheet.create({
   },
 
   modalTextInput: {
-    backgroundColor: "green",
+    backgroundColor: "green", // FIXME: Change this color
     color: "#E5E5E5",
-    width: "10%"
+    fontSize: 25,
+    marginLeft: 25,
+    textAlign: "center",
+    width: "20%"
+  },
+
+  modalTextInputName: {
+    backgroundColor: "green", // FIXME: Change this color
+    color: "#E5E5E5",
+    fontSize: 25,
+    paddingLeft: 7,
+    paddingRight: 7,
+    width: "65%"
+  },
+
+  unusedInfo: {
+
+  },
+
+  unusedInfoText: {
+    color: "#00E7EB",
+    fontSize: 20,
+    fontWeight: "bold"
+  },
+
+  addButton: {
+    alignItems: "center",
+    borderColor: "#E5E5E5",
+    borderRadius: 10,
+    borderWidth: 2,
+    marginTop: 50,
+    padding: 10,
+    width: "50%"
+  },
+
+  addButtonText: {
+    color: "#E5E5E5",
+    fontSize: 35,
+    fontWeight: "bold"
   }
 })
