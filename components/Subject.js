@@ -1,7 +1,9 @@
-import { View, Text, TextInput, TouchableOpacity, Modal } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Modal, Keyboard } from "react-native";
 import { useState, useEffect } from "react";
 import { subjectCSS } from "../styles/subjectstyle";
+import { modalCSS } from "../styles/globalstyle";
 import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function Subject({ subjectProps }) {
   // TODO: Add warning about valid scores being from 0 to 20
@@ -25,6 +27,11 @@ export default function Subject({ subjectProps }) {
 
   // Modal visibility state
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [newName, setNewName] = useState("Hello");
+  const [newCC1, setNewCC1] = useState(190); // 190 indicates that the coefficient won't be used
+  const [newCC2, setNewCC2] = useState(190);
+  const [newCC3, setNewCC3] = useState(190);
 
   useEffect(() => {
     // Calculates CC1 points
@@ -139,16 +146,28 @@ export default function Subject({ subjectProps }) {
   }
 
   const openSetting = () => {
-    // TODO: Opens settings of a subject
     // TODO: It should pass subjectProps to the new window
-    // TODO: New window also should be able to pass updated subjectProps back to Subject component
-    // TODO: It should be able to delete the subject from the list
     setIsModalVisible(true);
+    // REMOVE: Console.log
+    console.log("Opened settings.");
   };
 
+  const changeSubject = () => {
+    // TODO: It should be able to pass updated subjectProps back to Subject component
+    // TODO: It should be able to delete the subject from the list
+    console.log("Changed subject settings. Closing the window");
+    setIsModalVisible(false);
+  }
+
   const closeSetting = () => {
+    // REMOVE: Console.log
+    console.log("Closed settings.");
     setIsModalVisible(false);
   };
+
+  const keyboardRemover = () => {
+    Keyboard.dismiss();
+  }
 
   return (
     <View style = {subjectCSS.container}>
@@ -211,21 +230,82 @@ export default function Subject({ subjectProps }) {
       </View>
 
        {/* TODO: Make settings for changing the name of subject and its coefficients*/}
+      {/* Window for changing a new subject */}
       <Modal
-        visible={isModalVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={closeSetting}
-      >
-        <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <View style = {{ backgroundColor: 'white', width: '90%', height: '90%' }}>
-            <Text>This is your modal content.</Text>
-            <TouchableOpacity onPress={closeSetting}>
-              <Text>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+          visible={isModalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={closeSetting}
+        >
+         <TouchableWithoutFeedback onPress = {keyboardRemover}>
+            <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style = {modalCSS.container}>
+                <View style = {modalCSS.closer}>
+                  <TouchableOpacity onPress = {closeSetting}>
+                    <FontAwesome name = "close" size = {50} color = "#E5E5E5" />
+                  </TouchableOpacity>
+                </View>
+
+                <View style = {modalCSS.addingInfo}>
+                  <Text style = {{ color: "#E5E5E5", fontSize: 31 }}> Change the new subject </Text>
+                </View>
+
+                <View style = {modalCSS.inputs}>
+                  <View style = {modalCSS.singleInput}>
+                    <Text style = {modalCSS.singleInputText}>Name: </Text>
+                    <TextInput 
+                      onChangeText = {(enteredName) => {setNewName(enteredName)}}
+                      style = {modalCSS.textInputName}
+                    />
+                  </View>
+
+                  <View style = {modalCSS.singleInput}>
+                    <Text style = {modalCSS.singleInputText}>CC1 coefficient: </Text>
+                    <TextInput 
+                      onChangeText = {(enteredCC1) => {setNewCC1(enteredCC1)}}
+                      keyboardType = "numeric"
+                      style = {modalCSS.textInput}
+                    />
+                  </View>
+
+                  <View style = {modalCSS.singleInput}>
+                    <Text style = {modalCSS.singleInputText}>CC2 coefficient: </Text>
+                    <TextInput 
+                      onChangeText = {(enteredCC2) => {setNewCC2(enteredCC2)}}
+                      keyboardType = "numeric"
+                      style = {modalCSS.textInput}
+                    />
+                  </View>
+                  
+                  <View style = {modalCSS.singleInput}>
+                    <Text style = {modalCSS.singleInputText}>CC3 coefficient: </Text>
+                    <TextInput
+                      onChangeText = {(enteredCC3) => {setNewCC3(enteredCC3)}}
+                      keyboardType = "numeric"
+                      style = {modalCSS.textInput}
+                    />
+                  </View>
+
+                  {/* Info text about unused coefficients */}
+                  <View style = {modalCSS.unusedInfo}>
+                    <Text style = {modalCSS.unusedInfoText}> 
+                      Info: If a coefficient will not be used, leave it blank. 
+                    </Text>
+                  </View>
+
+                  {/* Button that adds the new written props to the subject, then closes the modal */}
+                  <View style = {{ alignItems: "center" }}>
+                    <View style = {modalCSS.addButton}>
+                      <TouchableOpacity onPress = {changeSubject}>
+                        <Text style = {modalCSS.addButtonText}> Change </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
     </View>
   )
 }

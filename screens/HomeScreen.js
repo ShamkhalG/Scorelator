@@ -1,7 +1,8 @@
 import { View, Text, TextInput, TouchableWithoutFeedback, TouchableOpacity, Keyboard, Modal } from "react-native"
 import { useState } from "react";
 import { homeCSS } from "../styles/homestyle"
-import { FontAwesome } from '@expo/vector-icons'; 
+import { modalCSS } from "../styles/globalstyle";
+import { FontAwesome } from '@expo/vector-icons';
 import Subject from "../components/Subject"
 
 export default function HomeScreen() {
@@ -72,70 +73,69 @@ export default function HomeScreen() {
         >
           <TouchableWithoutFeedback onPress = {keyboardRemover}>
             <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style = {homeCSS.modalContainer}>
-                <View style = {homeCSS.modalCloser}>
+              <View style = {modalCSS.container}>
+                <View style = {modalCSS.closer}>
                   <TouchableOpacity onPress={closeAddSubject}>
                     <FontAwesome name = "close" size = {50} color = "#E5E5E5" />
                   </TouchableOpacity>
                 </View>
 
-                <View style = {homeCSS.addingInfo}>
-                  <Text style = {homeCSS.addingInfoText}> Add a new subject </Text>
+                <View style = {modalCSS.addingInfo}>
+                  <Text style = {modalCSS.addingInfoText}> Add a new subject </Text>
                 </View>
 
-                <View style = {homeCSS.modalInputs}>
-                  <View style = {homeCSS.modalSingleInput}>
-                    <Text style = {homeCSS.modalSingleInputText}>Name: </Text>
+                <View style = {modalCSS.inputs}>
+                  <View style = {modalCSS.singleInput}>
+                    <Text style = {modalCSS.singleInputText}>Name: </Text>
                     <TextInput 
                       onChangeText = {(enteredName) => {setNewName(enteredName)}}
-                      style = {homeCSS.modalTextInputName}
+                      style = {modalCSS.textInputName}
                     />
                   </View>
 
-                  <View style = {homeCSS.modalSingleInput}>
-                    <Text style = {homeCSS.modalSingleInputText}>CC1 coefficient: </Text>
+                  <View style = {modalCSS.singleInput}>
+                    <Text style = {modalCSS.singleInputText}>CC1 coefficient: </Text>
                     <TextInput 
                       onChangeText = {(enteredCC1) => {setNewCC1(enteredCC1)}}
                       keyboardType = "numeric"
-                      style = {homeCSS.modalTextInput}
+                      style = {modalCSS.textInput}
                     />
                   </View>
 
-                  <View style = {homeCSS.modalSingleInput}>
-                    <Text style = {homeCSS.modalSingleInputText}>CC2 coefficient: </Text>
+                  <View style = {modalCSS.singleInput}>
+                    <Text style = {modalCSS.singleInputText}>CC2 coefficient: </Text>
                     <TextInput 
                       onChangeText = {(enteredCC2) => {setNewCC2(enteredCC2)}}
                       keyboardType = "numeric"
-                      style = {homeCSS.modalTextInput}
+                      style = {modalCSS.textInput}
                     />
                   </View>
                   
-                  <View style = {homeCSS.modalSingleInput}>
-                    <Text style = {homeCSS.modalSingleInputText}>CC3 coefficient: </Text>
+                  <View style = {modalCSS.singleInput}>
+                    <Text style = {modalCSS.singleInputText}>CC3 coefficient: </Text>
                     <TextInput
                       onChangeText = {(enteredCC3) => {setNewCC3(enteredCC3)}}
                       keyboardType = "numeric"
-                      style = {homeCSS.modalTextInput}
+                      style = {modalCSS.textInput}
                     />
                   </View>
 
                   {/* Info text about unused coefficients */}
-                  <View style = {homeCSS.unusedInfo}>
-                    <Text style = {homeCSS.unusedInfoText}> 
+                  <View style = {modalCSS.unusedInfo}>
+                    <Text style = {modalCSS.unusedInfoText}> 
                       Info: If a coefficient will not be used, leave it blank. 
                     </Text>
                   </View>
 
                   {/* Button that adds the new written props to the subject, then closes the modal */}
                   <View style = {{ alignItems: "center" }}>
-                    <View style = {homeCSS.addButton}>
+                    <View style = {modalCSS.addButton}>
                       <TouchableOpacity onPress = {addSubject}>
-                        <Text style = {homeCSS.addButtonText}> Add </Text>
+                        <Text style = {modalCSS.addButtonText}> Add </Text>
                       </TouchableOpacity>
                     </View>
                   </View>
                 </View>
-                {/* IMPORTANT: Give info about leaving a coefficient blank if it won't be used */}
               </View>
             </View>
           </TouchableWithoutFeedback>

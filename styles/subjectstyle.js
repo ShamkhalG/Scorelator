@@ -69,8 +69,4 @@ export const subjectCSS = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center"
   },
-
-  text: {
-    color: "#E5E5E5",
-  }
 })
