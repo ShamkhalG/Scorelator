@@ -28,10 +28,12 @@ export default function Subject({ subjectProps }) {
   // Modal visibility state
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [newName, setNewName] = useState("Hello");
-  const [newCC1, setNewCC1] = useState(190); // 190 indicates that the coefficient won't be used
+  const [newName, setNewName] = useState("");
+  const [newCC1, setNewCC1] = useState(190);
   const [newCC2, setNewCC2] = useState(190);
   const [newCC3, setNewCC3] = useState(190);
+
+  const numbersToCheck = [183, 190]; // 183 - the field is empty, 190 - coefficient is not used
 
   useEffect(() => {
     // Calculates CC1 points
@@ -86,7 +88,7 @@ export default function Subject({ subjectProps }) {
     if (CC1Score !== 183 || CC2Score !== 183 || CC3Score !== 183) {
       let newTotal = 0;
 
-      if (CC1Score !== 183) {
+      if (CC1Score !== 183 || CC1Score !== 190) {
         newTotal += CC1Final;
       }
 
@@ -152,18 +154,29 @@ export default function Subject({ subjectProps }) {
     console.log("Opened settings.");
   };
 
-  const changeSubject = () => {
-    // TODO: It should be able to pass updated subjectProps back to Subject component
-    // TODO: It should be able to delete the subject from the list
-    console.log("Changed subject settings. Closing the window");
-    setIsModalVisible(false);
-  }
-
   const closeSetting = () => {
     // REMOVE: Console.log
     console.log("Closed settings.");
     setIsModalVisible(false);
   };
+  
+  const changeSubject = () => {
+    // TODO: It should be able to pass updated subjectProps back to Subject component
+    // REMOVE: Console.log
+    console.log("Changed subject settings. Closing the window");
+    console.log("Name: " + newName);
+    console.log("CC1 coefficient: " + newCC1);
+    console.log("CC2 coefficient: " + newCC2);
+    console.log("CC3 coefficient: " + newCC3);
+    setIsModalVisible(false);
+  }
+
+  const deleteSubject = () => {
+    // TODO: It should be able to delete the subject from the list
+    // REMOVE: Console.log
+    console.log("Oops. Accidentally deleted the subject.");
+    closeSetting();
+  }
 
   const keyboardRemover = () => {
     Keyboard.dismiss();
@@ -185,43 +198,67 @@ export default function Subject({ subjectProps }) {
       </View>
 
       <View style = {subjectCSS.middle}>
-        <View>
+        <View style = {subjectCSS.middleView}>
           <Text style = {subjectCSS.middleText}> CC1 </Text>
-          {/* FIXME: Change the CSS of TextInput */}
-          <TextInput 
-            onChangeText = {CC1Handler}
-            keyboardType = "numeric"
-            style = {subjectCSS.middleInput}
-          />
-          {/* FIXME: If a coefficient is not used, it should show "X" */}
-          <Text style = {subjectCSS.middleText}> {CC1Final !== 183 ? CC1Final : "?"} / {subjectProps.CC1Coef} </Text>
-          <Text style = {subjectCSS.middleText}> {CC1Percentage !== 183 ? CC1Percentage : "?"} % </Text>
+
+          {subjectProps.CC1Coef === 190 ? (
+            <View>
+              <Text style = {subjectCSS.xletter}> X </Text>
+            </View>
+          ) : (
+            <View>
+              <TextInput 
+                onChangeText = {CC1Handler}
+                keyboardType = "numeric"
+                style = {subjectCSS.middleInput}
+              />
+
+              <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC1Final !== 183 ? CC1Final : "?"}</Text> / {subjectProps.CC1Coef} </Text>
+              <Text style = {subjectCSS.middleText}> {CC1Percentage !== 183 ? CC1Percentage : "?"} % </Text>
+            </View>
+          )}
         </View>
         
-        <View>
+        <View style = {subjectCSS.middleView}>
           <Text style = {subjectCSS.middleText}> CC2 </Text>
-          {/* FIXME: Change the CSS of TextInput */}
-          <TextInput 
-            onChangeText = {CC2Handler}
-            keyboardType = "numeric"
-            style = {subjectCSS.middleInput}
-          />
-          {/* FIXME: If a coefficient is not used, it should show "X" */}
-          <Text style = {subjectCSS.middleText}> {CC2Final !== 183 ? CC2Final : "?"} / {subjectProps.CC2Coef} </Text>
-          <Text style = {subjectCSS.middleText}> {CC2Percentage !== 183 ? CC2Percentage : "?"} % </Text>
+          
+          {subjectProps.CC2Coef === 190 ? (
+            <View>
+              <Text style = {subjectCSS.xletter}> X </Text>
+            </View>
+          ) : (
+            <View>
+              <TextInput 
+                onChangeText = {CC2Handler}
+                keyboardType = "numeric"
+                style = {subjectCSS.middleInput}
+              />
+
+              <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC2Final !== 183 ? CC2Final : "?"}</Text> / {subjectProps.CC2Coef} </Text>
+              <Text style = {subjectCSS.middleText}> {CC2Percentage !== 183 ? CC2Percentage : "?"} % </Text>
+            </View>
+          )}
         </View>
         
-        <View>
+        <View style = {subjectCSS.middleView}>
           <Text style = {subjectCSS.middleText}> CC3 </Text>
-          {/* FIXME: Change the CSS of TextInput */}
-          <TextInput 
-            onChangeText = {CC3Handler}
-            keyboardType = "numeric"
-            style = {subjectCSS.middleInput}
-          />
-          {/* FIXME: If a coefficient is not used, it should show "X" */}
-          <Text style = {subjectCSS.middleText}> {CC3Final !== 183 ? CC3Final : "?"} / {subjectProps.CC3Coef} </Text>
-          <Text style = {subjectCSS.middleText}> {CC3Percentage !== 183 ? CC3Percentage : "?"} % </Text>
+          
+          {subjectProps.CC3Coef === 190 ? (
+            <View>
+              <Text style = {subjectCSS.xletter}> X </Text>
+            </View>
+          ) : (
+            <View>
+              <TextInput 
+                onChangeText = {CC3Handler}
+                keyboardType = "numeric"
+                style = {subjectCSS.middleInput}
+              />
+              
+              <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC3Final !== 183 ? CC3Final : "?"}</Text> / {subjectProps.CC3Coef} </Text>
+              <Text style = {subjectCSS.middleText}> {CC3Percentage !== 183 ? CC3Percentage : "?"} % </Text>
+            </View>
+          )}
         </View>
       </View>
 
@@ -229,83 +266,92 @@ export default function Subject({ subjectProps }) {
         <Text style = {subjectCSS.bottomText}> Total: {total !== 183 ? total : "?"} / {subjectProps.coefficient} ({totalPercentage !== 183 ? totalPercentage : "?"}%) </Text>
       </View>
 
-       {/* TODO: Make settings for changing the name of subject and its coefficients*/}
       {/* Window for changing a new subject */}
       <Modal
           visible={isModalVisible}
           animationType="slide"
           transparent={true}
           onRequestClose={closeSetting}
-        >
-         <TouchableWithoutFeedback onPress = {keyboardRemover}>
-            <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style = {modalCSS.container}>
-                <View style = {modalCSS.closer}>
-                  <TouchableOpacity onPress = {closeSetting}>
-                    <FontAwesome name = "close" size = {50} color = "#E5E5E5" />
-                  </TouchableOpacity>
+      >
+        <TouchableWithoutFeedback onPress = {keyboardRemover}>
+          <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style = {modalCSS.container}>
+              <View style = {modalCSS.closer}>
+                <TouchableOpacity onPress = {closeSetting}>
+                  <FontAwesome name = "close" size = {50} color = "#E5E5E5" />
+                </TouchableOpacity>
+              </View>
+
+              <View style = {modalCSS.addingInfo}>
+                <Text style = {{ color: "#E5E5E5", fontSize: 30, fontWeight: "bold" }}> Change the subject </Text>
+              </View>
+
+              <View style = {modalCSS.inputs}>
+                <View style = {modalCSS.singleInput}>
+                  <Text style = {modalCSS.singleInputText}>Name: </Text>
+                  <TextInput 
+                    style = {modalCSS.textInputName}
+                    onChangeText = {(enteredName) => {setNewName(enteredName)}}
+                    value = {subjectProps.name}
+                  />
                 </View>
 
-                <View style = {modalCSS.addingInfo}>
-                  <Text style = {{ color: "#E5E5E5", fontSize: 31 }}> Change the new subject </Text>
+                <View style = {modalCSS.singleInput}>
+                  <Text style = {modalCSS.singleInputText}>CC1 coefficient: </Text>
+                  <TextInput 
+                    onChangeText = {(enteredCC1) => {setNewCC1(enteredCC1)}}
+                    keyboardType = "numeric"
+                    style = {modalCSS.textInput}
+                    value = {subjectProps.CC1Coef.toString()}
+                  />
                 </View>
 
-                <View style = {modalCSS.inputs}>
-                  <View style = {modalCSS.singleInput}>
-                    <Text style = {modalCSS.singleInputText}>Name: </Text>
-                    <TextInput 
-                      onChangeText = {(enteredName) => {setNewName(enteredName)}}
-                      style = {modalCSS.textInputName}
-                    />
+                <View style = {modalCSS.singleInput}>
+                  <Text style = {modalCSS.singleInputText}>CC2 coefficient: </Text>
+                  <TextInput 
+                    onChangeText = {(enteredCC2) => {setNewCC2(enteredCC2)}}
+                    keyboardType = "numeric"
+                    style = {modalCSS.textInput}
+                    value = {subjectProps.CC2Coef.toString()}
+                  />
+                </View>
+                
+                <View style = {modalCSS.singleInput}>
+                  <Text style = {modalCSS.singleInputText}>CC3 coefficient: </Text>
+                  <TextInput
+                    onChangeText = {(enteredCC3) => {setNewCC3(enteredCC3)}}
+                    keyboardType = "numeric"
+                    style = {modalCSS.textInput}
+                    value = {subjectProps.CC3Coef.toString()}
+                  />
+                </View>
+
+                {/* Info text about unused coefficients */}
+                <View style = {modalCSS.unusedInfo}>
+                  <Text style = {modalCSS.unusedInfoText}> 
+                    Info: If a coefficient will not be used, leave it blank. 
+                  </Text>
+                </View>
+
+                {/* Button that adds the new written props to the subject, then closes the modal */}
+                <View style = {{ flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style = {subjectCSS.addButton}>
+                    <TouchableOpacity onPress = {changeSubject}>
+                      <Text style = {subjectCSS.addButtonText}> Change </Text>
+                    </TouchableOpacity>
                   </View>
 
-                  <View style = {modalCSS.singleInput}>
-                    <Text style = {modalCSS.singleInputText}>CC1 coefficient: </Text>
-                    <TextInput 
-                      onChangeText = {(enteredCC1) => {setNewCC1(enteredCC1)}}
-                      keyboardType = "numeric"
-                      style = {modalCSS.textInput}
-                    />
-                  </View>
-
-                  <View style = {modalCSS.singleInput}>
-                    <Text style = {modalCSS.singleInputText}>CC2 coefficient: </Text>
-                    <TextInput 
-                      onChangeText = {(enteredCC2) => {setNewCC2(enteredCC2)}}
-                      keyboardType = "numeric"
-                      style = {modalCSS.textInput}
-                    />
-                  </View>
-                  
-                  <View style = {modalCSS.singleInput}>
-                    <Text style = {modalCSS.singleInputText}>CC3 coefficient: </Text>
-                    <TextInput
-                      onChangeText = {(enteredCC3) => {setNewCC3(enteredCC3)}}
-                      keyboardType = "numeric"
-                      style = {modalCSS.textInput}
-                    />
-                  </View>
-
-                  {/* Info text about unused coefficients */}
-                  <View style = {modalCSS.unusedInfo}>
-                    <Text style = {modalCSS.unusedInfoText}> 
-                      Info: If a coefficient will not be used, leave it blank. 
-                    </Text>
-                  </View>
-
-                  {/* Button that adds the new written props to the subject, then closes the modal */}
-                  <View style = {{ alignItems: "center" }}>
-                    <View style = {modalCSS.addButton}>
-                      <TouchableOpacity onPress = {changeSubject}>
-                        <Text style = {modalCSS.addButtonText}> Change </Text>
-                      </TouchableOpacity>
-                    </View>
+                  <View style = {subjectCSS.changeButton}>
+                    <TouchableOpacity onPress = {deleteSubject}>
+                      <Text style = {subjectCSS.changeButtonText}> Delete </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
             </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   )
 }

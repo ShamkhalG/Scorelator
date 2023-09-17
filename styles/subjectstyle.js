@@ -6,6 +6,7 @@ export const subjectCSS = StyleSheet.create({
     borderColor: "#E5E5E5",
     borderWidth: 2,
     width: 350,
+
   },
 
   top: {
@@ -39,9 +40,15 @@ export const subjectCSS = StyleSheet.create({
     borderColor: "#E5E5E5",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "stretch", // REMOVE:
     padding: 3,
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+
+  middleView: {
+    flex: 1,
+    margin: 4,
   },
 
   middleText: {
@@ -51,10 +58,19 @@ export const subjectCSS = StyleSheet.create({
   },
 
   middleInput: {
-    backgroundColor: "green",
-    color: "#FF951D",
+    borderColor: "#A9A9A9",
+    borderWidth: 2,
+    color: "#FFAC4E",
     fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+
+  xletter: {
+    color: "#E5E5E5",
+    fontSize: 70,
     textAlign: "center"
   },
 
@@ -69,4 +85,37 @@ export const subjectCSS = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center"
   },
+
+  // Modal exclusive CSS
+  addButton: {
+    alignItems: "center",
+    borderColor: "#E5E5E5",
+    borderRadius: 10,
+    borderWidth: 2,
+    marginTop: 50,
+    padding: 10,
+    width: "45%"
+  },
+
+  addButtonText: {
+    color: "#E5E5E5",
+    fontSize: 30,
+    fontWeight: "bold"
+  },
+
+  changeButton: {
+    alignItems: "center",
+    borderColor: "#EE2B2B",
+    borderRadius: 10,
+    borderWidth: 2,
+    marginTop: 50,
+    padding: 10,
+    width: "45%"
+  },
+
+  changeButtonText: {
+    color: "#EE2B2B",
+    fontSize: 30,
+    fontWeight: "bold"
+  }
 })

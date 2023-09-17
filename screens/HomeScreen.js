@@ -7,19 +7,35 @@ import Subject from "../components/Subject"
 
 export default function HomeScreen() {
   const [isAddSubjectModalVisible, setIsAddSubjectModalVisible] = useState(false);
-  const [newName, setNewName] = useState("Hello");
-  const [newCC1, setNewCC1] = useState(190); // 190 indicates that the coefficient won't be used
+  const [error, setError] = useState(0);
+
+  const [newName, setNewName] = useState("");
+  const [newCC1, setNewCC1] = useState(190);
   const [newCC2, setNewCC2] = useState(190);
   const [newCC3, setNewCC3] = useState(190);
   
   const subjectProps = {
     name: "Mathematics",
     get coefficient() {
-      return this.CC1Coef + this.CC2Coef + this.CC3Coef;
+      let sum = 0;
+
+      if (this.CC1Coef !== 190) {
+        sum += this.CC1Coef;
+      }
+
+      if (this.CC2Coef !== 190) {
+        sum += this.CC2Coef;
+      }
+
+      if (this.CC3Coef !== 190) {
+        sum += this.CC3Coef;
+      }
+
+      return sum;
     },
-    CC1Coef: 1.5,
-    CC2Coef: 2,
-    CC3Coef: 2.5,
+    CC1Coef: 190,
+    CC2Coef: 190,
+    CC3Coef: 190,
   }
 
   const keyboardRemover = () => {
@@ -53,8 +69,7 @@ export default function HomeScreen() {
   return (
     <TouchableWithoutFeedback onPress = {keyboardRemover}>
       <View style = {homeCSS.container}>
-        {/* REMOVE: Remove "Home" text */}
-        <Text style = {homeCSS.homeText}> Home </Text>
+        {/* TODO: Use map function to render all Subject components */}
         <Subject subjectProps = {subjectProps} />
 
         {/* + button to add a new subject to the list */}
@@ -64,7 +79,7 @@ export default function HomeScreen() {
           </View>
         </TouchableOpacity>
       
-        {/* Window for adding a new subject */}
+        {/* Modal window for adding a new subject */}
         <Modal
           visible={isAddSubjectModalVisible}
           animationType="slide"
@@ -74,17 +89,20 @@ export default function HomeScreen() {
           <TouchableWithoutFeedback onPress = {keyboardRemover}>
             <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <View style = {modalCSS.container}>
+                {/* X button to close the modal window */}
                 <View style = {modalCSS.closer}>
                   <TouchableOpacity onPress={closeAddSubject}>
                     <FontAwesome name = "close" size = {50} color = "#E5E5E5" />
                   </TouchableOpacity>
                 </View>
 
+                {/* Text: "Add a new subject" */}
                 <View style = {modalCSS.addingInfo}>
                   <Text style = {modalCSS.addingInfoText}> Add a new subject </Text>
                 </View>
 
                 <View style = {modalCSS.inputs}>
+                  {/* Input for the name */}
                   <View style = {modalCSS.singleInput}>
                     <Text style = {modalCSS.singleInputText}>Name: </Text>
                     <TextInput 
@@ -93,6 +111,7 @@ export default function HomeScreen() {
                     />
                   </View>
 
+                  {/* Input for the CC1 coefficient */}
                   <View style = {modalCSS.singleInput}>
                     <Text style = {modalCSS.singleInputText}>CC1 coefficient: </Text>
                     <TextInput 
@@ -102,6 +121,7 @@ export default function HomeScreen() {
                     />
                   </View>
 
+                  {/* Input for the CC2 coefficient */}
                   <View style = {modalCSS.singleInput}>
                     <Text style = {modalCSS.singleInputText}>CC2 coefficient: </Text>
                     <TextInput 
@@ -111,6 +131,7 @@ export default function HomeScreen() {
                     />
                   </View>
                   
+                  {/* Input for the CC3 coefficient */}
                   <View style = {modalCSS.singleInput}>
                     <Text style = {modalCSS.singleInputText}>CC3 coefficient: </Text>
                     <TextInput

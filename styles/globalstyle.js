@@ -14,16 +14,17 @@ export const modalCSS = StyleSheet.create({
 
   addingInfo: {
     alignItems: "center",
-    marginTop: 40
+    marginTop: 40,
+    marginBottom: 40
   },
 
   addingInfoText: {
     color: "#E5E5E5",
-    fontSize: 38
+    fontSize: 38,
+    fontWeight: "bold"
   },
 
   inputs: {
-    flex: 1.5,
     justifyContent: "center",
   },
 
