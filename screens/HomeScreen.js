@@ -33,9 +33,9 @@ export default function HomeScreen() {
 
       return sum;
     },
-    CC1Coef: 190,
-    CC2Coef: 190,
-    CC3Coef: 190,
+    CC1Coef: 1.5,
+    CC2Coef: 2,
+    CC3Coef: 2.5,
   }
 
   const keyboardRemover = () => {

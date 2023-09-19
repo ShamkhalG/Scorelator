@@ -33,11 +33,11 @@ export default function Subject({ subjectProps }) {
   const [newCC2, setNewCC2] = useState(190);
   const [newCC3, setNewCC3] = useState(190);
 
-  const numbersToCheck = [183, 190]; // 183 - the field is empty, 190 - coefficient is not used
+  const subjectPropsCheckable = [0, 190];
 
   useEffect(() => {
-    // Calculates CC1 points
-    if (CC1Score !== 183) {
+    // Calculates CC1 score and percentage
+    if (CC1Score !== 183 && subjectProps.CC1Coef !== 190) {
       const newCC1Final = (CC1Score / 20) * subjectProps.CC1Coef;
       const newCC1Percentage = (newCC1Final / subjectProps.CC1Coef) * 100;
 
@@ -48,12 +48,13 @@ export default function Subject({ subjectProps }) {
       setCC1Final(formattedCC1Final);
       setCC1Percentage(formattedCC1Percentage);
     } else {
+      setCC1Score(183);
       setCC1Final(183);
       setCC1Percentage(183);
     }
 
-    // Calculates CC2 points
-    if (CC2Score !== 183) {
+    // Calculates CC2 score and percentage
+    if (CC2Score !== 183 && subjectProps.CC2Coef !== 190) {
       const newCC2Final = (CC2Score / 20) * subjectProps.CC2Coef;
       const newCC2Percentage = (newCC2Final / subjectProps.CC2Coef) * 100;
 
@@ -64,12 +65,13 @@ export default function Subject({ subjectProps }) {
       setCC2Final(formattedCC2Final);
       setCC2Percentage(formattedCC2Percentage);
     } else {
+      setCC2Score(183);
       setCC2Final(183);
       setCC2Percentage(183);
     }
 
-    // Calculates CC3 points
-    if (CC3Score !== 183) {
+    // Calculates CC3 score and percentage
+    if (CC3Score !== 183 && subjectProps.CC3Coef !== 190) {
       const newCC3Final = (CC3Score / 20) * subjectProps.CC3Coef;
       const newCC3Percentage = (newCC3Final / subjectProps.CC3Coef) * 100;
 
@@ -80,6 +82,7 @@ export default function Subject({ subjectProps }) {
       setCC3Final(formattedCC3Final);
       setCC3Percentage(formattedCC3Percentage);
     } else {
+      setCC3Score(183);
       setCC3Final(183);
       setCC3Percentage(183);
     }
@@ -88,15 +91,15 @@ export default function Subject({ subjectProps }) {
     if (CC1Score !== 183 || CC2Score !== 183 || CC3Score !== 183) {
       let newTotal = 0;
 
-      if (CC1Score !== 183 || CC1Score !== 190) {
+      if (CC1Score !== 183 && subjectProps.CC1Coef !== 190) {
         newTotal += CC1Final;
       }
 
-      if (CC2Score !== 183) {
+      if (CC2Score !== 183 && subjectProps.CC2Coef !== 190) {
         newTotal += CC2Final;
       }
 
-      if (CC3Score !== 183) {
+      if (CC3Score !== 183 && subjectProps.CC3Coef !== 190) {
         newTotal += CC3Final;
       }
 
@@ -121,7 +124,7 @@ export default function Subject({ subjectProps }) {
     } else {
       setTotalPercentage(183);
     }
-  }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total]);
+  }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total, subjectProps]);
 
   const CC1Handler = (CC1result) => {
     if (CC1result === ""){
@@ -302,7 +305,7 @@ export default function Subject({ subjectProps }) {
                     onChangeText = {(enteredCC1) => {setNewCC1(enteredCC1)}}
                     keyboardType = "numeric"
                     style = {modalCSS.textInput}
-                    value = {subjectProps.CC1Coef.toString()}
+                    value = {subjectProps.CC1Coef !== 190 ? subjectProps.CC1Coef.toString() : null}
                   />
                 </View>
 
@@ -312,7 +315,7 @@ export default function Subject({ subjectProps }) {
                     onChangeText = {(enteredCC2) => {setNewCC2(enteredCC2)}}
                     keyboardType = "numeric"
                     style = {modalCSS.textInput}
-                    value = {subjectProps.CC2Coef.toString()}
+                    value = {subjectProps.CC2Coef !== 190 ? subjectProps.CC2Coef.toString() : null}
                   />
                 </View>
                 
@@ -322,7 +325,7 @@ export default function Subject({ subjectProps }) {
                     onChangeText = {(enteredCC3) => {setNewCC3(enteredCC3)}}
                     keyboardType = "numeric"
                     style = {modalCSS.textInput}
-                    value = {subjectProps.CC3Coef.toString()}
+                    value = {subjectProps.CC3Coef !== 190 ? subjectProps.CC3Coef.toString() : null}
                   />
                 </View>
 
