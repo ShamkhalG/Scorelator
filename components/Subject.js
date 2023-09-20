@@ -28,16 +28,18 @@ export default function Subject({ subjectProps }) {
   // Modal visibility state
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [newName, setNewName] = useState("");
-  const [newCC1, setNewCC1] = useState(190);
-  const [newCC2, setNewCC2] = useState(190);
-  const [newCC3, setNewCC3] = useState(190);
+  // Updated values
+  const [currentCC1, setCurrentCC1] = useState(subjectProps.CC1Coef !== 0 ? subjectProps.CC1Coef.toString() : "");
+  const [currentCC2, setCurrentCC2] = useState(subjectProps.CC2Coef !== 0 ? subjectProps.CC2Coef.toString() : "");
+  const [currentCC3, setCurrentCC3] = useState(subjectProps.CC3Coef !== 0 ? subjectProps.CC3Coef.toString() : "");
+  const [currentName, setCurrentName] = useState(subjectProps.name);
 
-  const subjectPropsCheckable = [0, 190];
+  // Confirmation state
+  const [deletionConfirm, setDeletionConfirm] = useState(0);
 
   useEffect(() => {
     // Calculates CC1 score and percentage
-    if (CC1Score !== 183 && subjectProps.CC1Coef !== 190) {
+    if (CC1Score !== 183 && subjectProps.CC1Coef !== 0) {
       const newCC1Final = (CC1Score / 20) * subjectProps.CC1Coef;
       const newCC1Percentage = (newCC1Final / subjectProps.CC1Coef) * 100;
 
@@ -54,7 +56,7 @@ export default function Subject({ subjectProps }) {
     }
 
     // Calculates CC2 score and percentage
-    if (CC2Score !== 183 && subjectProps.CC2Coef !== 190) {
+    if (CC2Score !== 183 && subjectProps.CC2Coef !== 0) {
       const newCC2Final = (CC2Score / 20) * subjectProps.CC2Coef;
       const newCC2Percentage = (newCC2Final / subjectProps.CC2Coef) * 100;
 
@@ -71,7 +73,7 @@ export default function Subject({ subjectProps }) {
     }
 
     // Calculates CC3 score and percentage
-    if (CC3Score !== 183 && subjectProps.CC3Coef !== 190) {
+    if (CC3Score !== 183 && subjectProps.CC3Coef !== 0) {
       const newCC3Final = (CC3Score / 20) * subjectProps.CC3Coef;
       const newCC3Percentage = (newCC3Final / subjectProps.CC3Coef) * 100;
 
@@ -91,15 +93,15 @@ export default function Subject({ subjectProps }) {
     if (CC1Score !== 183 || CC2Score !== 183 || CC3Score !== 183) {
       let newTotal = 0;
 
-      if (CC1Score !== 183 && subjectProps.CC1Coef !== 190) {
+      if (CC1Score !== 183 && subjectProps.CC1Coef !== 0) {
         newTotal += CC1Final;
       }
 
-      if (CC2Score !== 183 && subjectProps.CC2Coef !== 190) {
+      if (CC2Score !== 183 && subjectProps.CC2Coef !== 0) {
         newTotal += CC2Final;
       }
 
-      if (CC3Score !== 183 && subjectProps.CC3Coef !== 190) {
+      if (CC3Score !== 183 && subjectProps.CC3Coef !== 0) {
         newTotal += CC3Final;
       }
 
@@ -150,34 +152,58 @@ export default function Subject({ subjectProps }) {
     }
   }
 
+  // Subject change settings
   const openSetting = () => {
     // TODO: It should pass subjectProps to the new window
-    setIsModalVisible(true);
     // REMOVE: Console.log
     console.log("Opened settings.");
+    setIsModalVisible(true);
   };
 
   const closeSetting = () => {
     // REMOVE: Console.log
     console.log("Closed settings.");
+    setDeletionConfirm(0);
     setIsModalVisible(false);
   };
   
+  // Property change handlers
+  const nameChangeHandler = (enteredName) => {
+    setCurrentName(enteredName);
+  }
+
+  const CC1ChangeHandler = (enteredCC1Coef) => {
+    setCurrentCC1(enteredCC1Coef);
+  }
+
+  const CC2ChangeHandler = (enteredCC2Coef) => {
+    setCurrentCC2(enteredCC2Coef);
+  }
+
+  const CC3ChangeHandler = (enteredCC3Coef) => {
+    setCurrentCC3(enteredCC3Coef);
+  }
+
   const changeSubject = () => {
     // TODO: It should be able to pass updated subjectProps back to Subject component
     // REMOVE: Console.log
     console.log("Changed subject settings. Closing the window");
-    console.log("Name: " + newName);
-    console.log("CC1 coefficient: " + newCC1);
-    console.log("CC2 coefficient: " + newCC2);
-    console.log("CC3 coefficient: " + newCC3);
-    setIsModalVisible(false);
+    console.log("Name: " + currentName);
+    console.log("CC1 coefficient: " + currentCC1);
+    console.log("CC2 coefficient: " + currentCC2);
+    console.log("CC3 coefficient: " + currentCC3);
+
+    subjectProps.name = currentName;
+    subjectProps.CC1Coef = parseFloat(currentCC1);
+    subjectProps.CC2Coef = parseFloat(currentCC2);
+    subjectProps.CC3Coef = parseFloat(currentCC3);
+    closeSetting();
   }
 
   const deleteSubject = () => {
     // TODO: It should be able to delete the subject from the list
     // REMOVE: Console.log
-    console.log("Oops. Accidentally deleted the subject.");
+    console.log("Oops. Accidentally deleted the subject. Closing all modal windows.");
     closeSetting();
   }
 
@@ -204,7 +230,7 @@ export default function Subject({ subjectProps }) {
         <View style = {subjectCSS.middleView}>
           <Text style = {subjectCSS.middleText}> CC1 </Text>
 
-          {subjectProps.CC1Coef === 190 ? (
+          {subjectProps.CC1Coef === 0 ? (
             <View>
               <Text style = {subjectCSS.xletter}> X </Text>
             </View>
@@ -225,7 +251,7 @@ export default function Subject({ subjectProps }) {
         <View style = {subjectCSS.middleView}>
           <Text style = {subjectCSS.middleText}> CC2 </Text>
           
-          {subjectProps.CC2Coef === 190 ? (
+          {subjectProps.CC2Coef === 0 ? (
             <View>
               <Text style = {subjectCSS.xletter}> X </Text>
             </View>
@@ -246,7 +272,7 @@ export default function Subject({ subjectProps }) {
         <View style = {subjectCSS.middleView}>
           <Text style = {subjectCSS.middleText}> CC3 </Text>
           
-          {subjectProps.CC3Coef === 190 ? (
+          {subjectProps.CC3Coef === 0 ? (
             <View>
               <Text style = {subjectCSS.xletter}> X </Text>
             </View>
@@ -269,7 +295,8 @@ export default function Subject({ subjectProps }) {
         <Text style = {subjectCSS.bottomText}> Total: {total !== 183 ? total : "?"} / {subjectProps.coefficient} ({totalPercentage !== 183 ? totalPercentage : "?"}%) </Text>
       </View>
 
-      {/* Window for changing a new subject */}
+
+      {/* ------------------- Window for changing a new subject ------------------- */}
       <Modal
           visible={isModalVisible}
           animationType="slide"
@@ -294,59 +321,67 @@ export default function Subject({ subjectProps }) {
                   <Text style = {modalCSS.singleInputText}>Name: </Text>
                   <TextInput 
                     style = {modalCSS.textInputName}
-                    onChangeText = {(enteredName) => {setNewName(enteredName)}}
-                    value = {subjectProps.name}
+                    onChangeText = {nameChangeHandler}
+                    value = {currentName}
                   />
                 </View>
 
                 <View style = {modalCSS.singleInput}>
                   <Text style = {modalCSS.singleInputText}>CC1 coefficient: </Text>
                   <TextInput 
-                    onChangeText = {(enteredCC1) => {setNewCC1(enteredCC1)}}
+                    onChangeText = {CC1ChangeHandler}
                     keyboardType = "numeric"
                     style = {modalCSS.textInput}
-                    value = {subjectProps.CC1Coef !== 190 ? subjectProps.CC1Coef.toString() : null}
+                    value = {currentCC1}
                   />
                 </View>
 
                 <View style = {modalCSS.singleInput}>
                   <Text style = {modalCSS.singleInputText}>CC2 coefficient: </Text>
                   <TextInput 
-                    onChangeText = {(enteredCC2) => {setNewCC2(enteredCC2)}}
+                    onChangeText = {CC2ChangeHandler}
                     keyboardType = "numeric"
                     style = {modalCSS.textInput}
-                    value = {subjectProps.CC2Coef !== 190 ? subjectProps.CC2Coef.toString() : null}
+                    value = {currentCC2}
                   />
                 </View>
                 
                 <View style = {modalCSS.singleInput}>
                   <Text style = {modalCSS.singleInputText}>CC3 coefficient: </Text>
                   <TextInput
-                    onChangeText = {(enteredCC3) => {setNewCC3(enteredCC3)}}
+                    onChangeText = {CC3ChangeHandler}
                     keyboardType = "numeric"
                     style = {modalCSS.textInput}
-                    value = {subjectProps.CC3Coef !== 190 ? subjectProps.CC3Coef.toString() : null}
+                    value = {currentCC3}
                   />
                 </View>
 
                 {/* Info text about unused coefficients */}
-                <View style = {modalCSS.unusedInfo}>
-                  <Text style = {modalCSS.unusedInfoText}> 
-                    Info: If a coefficient will not be used, leave it blank. 
-                  </Text>
-                </View>
+                {deletionConfirm === 0 ? (
+                  <View>
+                    <Text style = {modalCSS.unusedInfoText}> 
+                      Info: If a coefficient will not be used, leave it blank. 
+                    </Text>
+                  </View>
+                ) : (
+                  <View>
+                    <Text style = {[modalCSS.unusedInfoText, {color: "#EE2B2B"}]}> 
+                      Warning: If you are sure you want to delete the subject, press the "Delete" button again.
+                    </Text>
+                  </View>
+                )}
 
                 {/* Button that adds the new written props to the subject, then closes the modal */}
                 <View style = {{ flexDirection: "row", justifyContent: "space-between" }}>
-                  <View style = {subjectCSS.addButton}>
+                  <View style = {subjectCSS.changeButton}>
                     <TouchableOpacity onPress = {changeSubject}>
-                      <Text style = {subjectCSS.addButtonText}> Change </Text>
+                      <Text style = {subjectCSS.changeButtonText}> Change </Text>
                     </TouchableOpacity>
                   </View>
 
-                  <View style = {subjectCSS.changeButton}>
-                    <TouchableOpacity onPress = {deleteSubject}>
-                      <Text style = {subjectCSS.changeButtonText}> Delete </Text>
+                  <View style = {subjectCSS.deleteButton}>
+                    <TouchableOpacity onPress = {deletionConfirm === 0 ? () => setDeletionConfirm(1) : deleteSubject}>
+                      <Text style = {subjectCSS.deleteButtonText}> Delete </Text>
                     </TouchableOpacity>
                   </View>
                 </View>

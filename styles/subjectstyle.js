@@ -86,8 +86,8 @@ export const subjectCSS = StyleSheet.create({
     textAlign: "center"
   },
 
-  // Modal exclusive CSS
-  addButton: {
+  // Change modal CSS
+  changeButton: {
     alignItems: "center",
     borderColor: "#E5E5E5",
     borderRadius: 10,
@@ -97,13 +97,13 @@ export const subjectCSS = StyleSheet.create({
     width: "45%"
   },
 
-  addButtonText: {
+  changeButtonText: {
     color: "#E5E5E5",
     fontSize: 30,
     fontWeight: "bold"
   },
 
-  changeButton: {
+  deleteButton: {
     alignItems: "center",
     borderColor: "#EE2B2B",
     borderRadius: 10,
@@ -113,9 +113,9 @@ export const subjectCSS = StyleSheet.create({
     width: "45%"
   },
 
-  changeButtonText: {
+  deleteButtonText: {
     color: "#EE2B2B",
     fontSize: 30,
     fontWeight: "bold"
-  }
+  },
 })

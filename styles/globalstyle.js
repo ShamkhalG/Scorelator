@@ -57,10 +57,6 @@ export const modalCSS = StyleSheet.create({
     width: "65%"
   },
 
-  unusedInfo: {
-
-  },
-
   unusedInfoText: {
     color: "#00E7EB",
     fontSize: 20,

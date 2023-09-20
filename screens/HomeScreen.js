@@ -10,24 +10,24 @@ export default function HomeScreen() {
   const [error, setError] = useState(0);
 
   const [newName, setNewName] = useState("");
-  const [newCC1, setNewCC1] = useState(190);
-  const [newCC2, setNewCC2] = useState(190);
-  const [newCC3, setNewCC3] = useState(190);
+  const [newCC1, setNewCC1] = useState(0);
+  const [newCC2, setNewCC2] = useState(0);
+  const [newCC3, setNewCC3] = useState(0);
   
   const subjectProps = {
     name: "Mathematics",
     get coefficient() {
       let sum = 0;
 
-      if (this.CC1Coef !== 190) {
+      if (this.CC1Coef !== 0) {
         sum += this.CC1Coef;
       }
 
-      if (this.CC2Coef !== 190) {
+      if (this.CC2Coef !== 0) {
         sum += this.CC2Coef;
       }
 
-      if (this.CC3Coef !== 190) {
+      if (this.CC3Coef !== 0) {
         sum += this.CC3Coef;
       }
 
@@ -144,7 +144,7 @@ export default function HomeScreen() {
                   {/* Info text about unused coefficients */}
                   <View style = {modalCSS.unusedInfo}>
                     <Text style = {modalCSS.unusedInfoText}> 
-                      Info: If a coefficient will not be used, leave it blank. 
+                      Info: If a coefficient will not be used, leave it blank, or write 0. 
                     </Text>
                   </View>
 
