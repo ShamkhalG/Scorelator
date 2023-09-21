@@ -40,7 +40,9 @@ export const modalCSS = StyleSheet.create({
   },
 
   textInput: {
-    backgroundColor: "green", // FIXME: Change this color
+    backgroundColor: "#171717", // FIXME: Change this color
+    borderColor: "#A9A9A9",
+    borderWidth: 2,
     color: "#E5E5E5",
     fontSize: 25,
     marginLeft: 25,
@@ -49,7 +51,9 @@ export const modalCSS = StyleSheet.create({
   },
 
   textInputName: {
-    backgroundColor: "green", // FIXME: Change this color
+    backgroundColor: "#171717", // FIXME: Change this color
+    borderColor: "#A9A9A9",
+    borderWidth: 2,
     color: "#E5E5E5",
     fontSize: 25,
     paddingLeft: 7,

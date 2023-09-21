@@ -25,7 +25,7 @@ export default function Subject({ subjectProps }) {
   const [total, setTotal] = useState(183);
   const [totalPercentage, setTotalPercentage] = useState(183);
 
-  // Modal visibility state
+  // Modal visibility state 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Updated values
@@ -36,6 +36,7 @@ export default function Subject({ subjectProps }) {
 
   // Confirmation state
   const [deletionConfirm, setDeletionConfirm] = useState(0);
+  const [triggerUseEffect, setTriggerUseEffect] = useState(0);
 
   useEffect(() => {
     // Calculates CC1 score and percentage
@@ -126,7 +127,7 @@ export default function Subject({ subjectProps }) {
     } else {
       setTotalPercentage(183);
     }
-  }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total, subjectProps]);
+  }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total, triggerUseEffect, subjectProps]);
 
   const CC1Handler = (CC1result) => {
     if (CC1result === ""){
@@ -153,36 +154,17 @@ export default function Subject({ subjectProps }) {
   }
 
   // Subject change settings
-  const openSetting = () => {
-    // TODO: It should pass subjectProps to the new window
-    // REMOVE: Console.log
-    console.log("Opened settings.");
-    setIsModalVisible(true);
-  };
-
+  const openSetting = () => setIsModalVisible(true);
   const closeSetting = () => {
-    // REMOVE: Console.log
-    console.log("Closed settings.");
     setDeletionConfirm(0);
     setIsModalVisible(false);
   };
   
   // Property change handlers
-  const nameChangeHandler = (enteredName) => {
-    setCurrentName(enteredName);
-  }
-
-  const CC1ChangeHandler = (enteredCC1Coef) => {
-    setCurrentCC1(enteredCC1Coef);
-  }
-
-  const CC2ChangeHandler = (enteredCC2Coef) => {
-    setCurrentCC2(enteredCC2Coef);
-  }
-
-  const CC3ChangeHandler = (enteredCC3Coef) => {
-    setCurrentCC3(enteredCC3Coef);
-  }
+  const nameChangeHandler = (enteredName) => setCurrentName(enteredName);
+  const CC1ChangeHandler = (enteredCC1Coef) => setCurrentCC1(enteredCC1Coef);
+  const CC2ChangeHandler = (enteredCC2Coef) => setCurrentCC2(enteredCC2Coef);
+  const CC3ChangeHandler = (enteredCC3Coef) => setCurrentCC3(enteredCC3Coef);
 
   const changeSubject = () => {
     // TODO: It should be able to pass updated subjectProps back to Subject component
@@ -194,16 +176,33 @@ export default function Subject({ subjectProps }) {
     console.log("CC3 coefficient: " + currentCC3);
 
     subjectProps.name = currentName;
-    subjectProps.CC1Coef = parseFloat(currentCC1);
-    subjectProps.CC2Coef = parseFloat(currentCC2);
-    subjectProps.CC3Coef = parseFloat(currentCC3);
+    if (currentCC1 !== "")
+      subjectProps.CC1Coef = parseFloat(currentCC1);
+    else
+      subjectProps.CC1Coef = 0;
+
+    if (currentCC2 !== "")
+      subjectProps.CC2Coef = parseFloat(currentCC2);
+    else
+      subjectProps.CC2Coef = 0;
+
+    if (currentCC3 !== "")
+      subjectProps.CC3Coef = parseFloat(currentCC3);
+    else
+      subjectProps.CC3Coef = 0;
+
+    // Triggers useEffect to recalculate values
+    if (triggerUseEffect === 0)
+      setTriggerUseEffect(1);
+    else
+      setTriggerUseEffect(0);
     closeSetting();
   }
 
   const deleteSubject = () => {
     // TODO: It should be able to delete the subject from the list
     // REMOVE: Console.log
-    console.log("Oops. Accidentally deleted the subject. Closing all modal windows.");
+    console.log("Oops. Accidentally deleted the subject.");
     closeSetting();
   }
 
@@ -295,7 +294,6 @@ export default function Subject({ subjectProps }) {
         <Text style = {subjectCSS.bottomText}> Total: {total !== 183 ? total : "?"} / {subjectProps.coefficient} ({totalPercentage !== 183 ? totalPercentage : "?"}%) </Text>
       </View>
 
-
       {/* ------------------- Window for changing a new subject ------------------- */}
       <Modal
           visible={isModalVisible}
@@ -313,7 +311,7 @@ export default function Subject({ subjectProps }) {
               </View>
 
               <View style = {modalCSS.addingInfo}>
-                <Text style = {{ color: "#E5E5E5", fontSize: 30, fontWeight: "bold" }}> Change the subject </Text>
+                <Text style = {{ color: "#E5E5E5", fontSize: 35, fontWeight: "bold" }}> Change the subject </Text>
               </View>
 
               <View style = {modalCSS.inputs}>
