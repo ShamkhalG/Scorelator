@@ -17,6 +17,23 @@ export const homeCSS = StyleSheet.create({
     width: 80
   },
 
+  totals: {
+    alignItems: "center",
+    height: 140,
+    justifyContent: "center",
+    left: 20,
+    paddingTop: 10,
+    position: "absolute",
+    top: 698,
+    width: 250,
+  },
+
+  totalsText: {
+    color: "#E5E5E5",
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+
   add: {
     alignItems: "center",
     backgroundColor: "#1F5435",

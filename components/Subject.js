@@ -214,9 +214,10 @@ export default function Subject({ subjectProps }) {
     <View style = {subjectCSS.container}>
       <View style = {subjectCSS.top}>
         {/* QUESTION: If the name is too long, it might not fit in the table */}
-        <Text style = {subjectCSS.topText}> {subjectProps.name} </Text>
+        {/* FIXME: Fix this DAMN CSS!!!!!!!!! */}
+        <Text style = {[subjectCSS.topText, {marginLeft: 5, maxWidth: "85%"}, subjectProps.name.length > 25 ? {fontSize: 20, textAlign: "center"} : subjectProps.name.length > 20 ? {fontSize: 20}: null]}> {subjectProps.name} </Text>
         <View style = {subjectCSS.topRight}>
-          <Text style = {subjectCSS.topText}> {subjectProps.coefficient} </Text>
+          <Text style = {[subjectCSS.topText, {alignSelf: "center"}]}> {subjectProps.coefficient} </Text>
           <View style={subjectCSS.setting}>
             <TouchableOpacity onPress = {openSetting}>
               <MaterialIcons name="settings" size={28} color="#E5E5E5" />

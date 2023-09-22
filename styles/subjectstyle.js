@@ -5,8 +5,8 @@ export const subjectCSS = StyleSheet.create({
     backgroundColor: "#171717",
     borderColor: "#E5E5E5",
     borderWidth: 2,
-    width: 350,
-
+    marginBottom: 30,
+    width: 350
   },
 
   top: {
@@ -14,19 +14,19 @@ export const subjectCSS = StyleSheet.create({
     borderColor: "#E5E5E5",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 3,
-    paddingBottom: 3
+    paddingBottom: 3,
+    paddingTop: 3
   },
 
   topRight: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
 
   setting: {
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
     paddingLeft: 5,
-    paddingRight: 5,
+    paddingRight: 5
   },
 
   topText: {
@@ -40,7 +40,6 @@ export const subjectCSS = StyleSheet.create({
     borderColor: "#E5E5E5",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "stretch", // REMOVE:
     padding: 3,
     paddingLeft: 10,
     paddingRight: 10
@@ -48,7 +47,7 @@ export const subjectCSS = StyleSheet.create({
 
   middleView: {
     flex: 1,
-    margin: 4,
+    margin: 4
   },
 
   middleText: {
@@ -63,9 +62,9 @@ export const subjectCSS = StyleSheet.create({
     color: "#FFAC4E",
     fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
     paddingTop: 5,
     paddingBottom: 5,
+    textAlign: "center"
   },
 
   xletter: {
