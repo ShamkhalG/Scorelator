@@ -5,13 +5,12 @@ import { modalCSS } from "../styles/globalstyle";
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
-export default function Subject({ subjectProps }) {
-  // TODO: Add warning about valid scores being from 0 to 20
+export default function Subject({ subjectKey, subjectProps, subjectsList, updateSubjectsList }) {
   // Values from inputs
   const [CC1Score, setCC1Score] = useState(183);
   const [CC2Score, setCC2Score] = useState(183);
   const [CC3Score, setCC3Score] = useState(183);
-
+  
   // Computable values
   const [CC1Final, setCC1Final] = useState(183);
   const [CC1Percentage, setCC1Percentage] = useState(183);
@@ -167,29 +166,25 @@ export default function Subject({ subjectProps }) {
   const CC3ChangeHandler = (enteredCC3Coef) => setCurrentCC3(enteredCC3Coef);
 
   const changeSubject = () => {
-    // TODO: It should be able to pass updated subjectProps back to Subject component
-    // REMOVE: Console.log
-    console.log("Changed subject settings. Closing the window");
-    console.log("Name: " + currentName);
-    console.log("CC1 coefficient: " + currentCC1);
-    console.log("CC2 coefficient: " + currentCC2);
-    console.log("CC3 coefficient: " + currentCC3);
-
-    subjectProps.name = currentName;
+    const newSubjectsList = [...subjectsList];
+    newSubjectsList[subjectKey].name = currentName;
+    
     if (currentCC1 !== "")
-      subjectProps.CC1Coef = parseFloat(currentCC1);
+      newSubjectsList[subjectKey].CC1Coef = parseFloat(currentCC1);
     else
-      subjectProps.CC1Coef = 0;
+      newSubjectsList[subjectKey].CC1Coef = 0;
 
     if (currentCC2 !== "")
-      subjectProps.CC2Coef = parseFloat(currentCC2);
+      newSubjectsList[subjectKey].CC2Coef = parseFloat(currentCC2);
     else
-      subjectProps.CC2Coef = 0;
+      newSubjectsList[subjectKey].CC2Coef = 0;
 
     if (currentCC3 !== "")
-      subjectProps.CC3Coef = parseFloat(currentCC3);
+      newSubjectsList[subjectKey].CC3Coef = parseFloat(currentCC3);
     else
-      subjectProps.CC3Coef = 0;
+      newSubjectsList[subjectKey].CC3Coef = 0;
+
+    updateSubjectsList(newSubjectsList);
 
     // Triggers useEffect to recalculate values
     if (triggerUseEffect === 0)
@@ -200,9 +195,10 @@ export default function Subject({ subjectProps }) {
   }
 
   const deleteSubject = () => {
-    // TODO: It should be able to delete the subject from the list
-    // REMOVE: Console.log
-    console.log("Oops. Accidentally deleted the subject.");
+    const newSubjectsList = [...subjectsList];
+    newSubjectsList.splice(subjectKey, 1);
+    updateSubjectsList(newSubjectsList);
+
     closeSetting();
   }
 
@@ -213,8 +209,6 @@ export default function Subject({ subjectProps }) {
   return (
     <View style = {subjectCSS.container}>
       <View style = {subjectCSS.top}>
-        {/* QUESTION: If the name is too long, it might not fit in the table */}
-        {/* FIXME: Fix this DAMN CSS!!!!!!!!! */}
         <Text style = {[subjectCSS.topText, {marginLeft: 5, maxWidth: "85%"}, subjectProps.name.length > 25 ? {fontSize: 20, textAlign: "center"} : subjectProps.name.length > 20 ? {fontSize: 20}: null]}> {subjectProps.name} </Text>
         <View style = {subjectCSS.topRight}>
           <Text style = {[subjectCSS.topText, {alignSelf: "center"}]}> {subjectProps.coefficient} </Text>

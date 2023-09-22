@@ -10,7 +10,7 @@ export default function HomeScreen() {
   const [error, setError] = useState(0);
   const TOTALS_HEIGHT = 140;
   const TOTAL_TWENTY = 20;
-  const TOTAL_FINAL = 7;
+  const TOTAL_FINAL = 20;
 
   const [newName, setNewName] = useState("");
   const [newCC1, setNewCC1] = useState(0);
@@ -23,7 +23,7 @@ export default function HomeScreen() {
   const [finalTotalTwenty, setFinalTotalTwenty] = useState(0);
   const [finalPercentage, setFinalPercentage] = useState(0);
   
-  const subjectsList = [
+  const [subjectsList, setSubjectsList] = useState([
     {
       name: "Mathematics",
       get coefficient() {
@@ -263,7 +263,11 @@ export default function HomeScreen() {
       CC2Coef: 1,
       CC3Coef: 1,
     },
-  ]
+  ]);
+
+  const updateSubjectsList = (newSubjectsList) => {
+    setSubjectsList(newSubjectsList);
+  };  
 
   useEffect(() => {
     const newSemesterTotal = subjectsList.reduce(( accumulator, currentObject ) => {
@@ -274,7 +278,7 @@ export default function HomeScreen() {
     const newFinalTotalTwenty = newFinalTotal * TOTAL_TWENTY / newSemesterTotal;
     const newFinalPercentage = newFinalTotalTwenty * 100 / TOTAL_TWENTY;
     
-    setFinalTotal(newFinalTotal % 1 === 0 ? parseFloat(newFinalTotal.toFixed(0)) : parseFloat(newFinalTotal).toFixed(3));
+    setFinalTotal(newFinalTotal % 1 === 0 ? parseFloat(newFinalTotal.toFixed(0)) : parseFloat(newFinalTotal.toFixed(3)));
     setSemesterTotal(newSemesterTotal % 1 === 0 ? parseFloat(newSemesterTotal.toFixed(0)) : parseFloat(newSemesterTotal.toFixed(3)));
     setFinalTotalTwenty(newFinalTotalTwenty % 1 === 0 ? parseFloat(newFinalTotalTwenty.toFixed(0)) : parseFloat(newFinalTotalTwenty.toFixed(3)));
     setFinalPercentage(newFinalPercentage % 1 === 0 ? parseFloat(newFinalPercentage.toFixed(0)) : parseFloat(newFinalPercentage.toFixed(2)));
@@ -284,28 +288,38 @@ export default function HomeScreen() {
     Keyboard.dismiss();
   }
 
-  const openAddSubject = () => {
-    setIsAddSubjectModalVisible(true);
-    // REMOVE: Console.log
-    console.log("Opened add subject.")
-  }
+  const openAddSubject = () => setIsAddSubjectModalVisible(true);
+  const closeAddSubject = () => setIsAddSubjectModalVisible(false);
   
-  const closeAddSubject = () => {
-    setIsAddSubjectModalVisible(false);
-    // REMOVE: Console.log
-    console.log("Closed add subject.")
-  }
-  
-  const addSubject = () => {
-    // TODO: Adds the subject to the database, then closes the model
-    // IMPORTANT: It should pass the type check (no additional characters like strings, only numbers)
-    // REMOVE: Console.log
-    console.log("Added the subject to the database...");
-    console.log("Name: " + newName);
-    console.log("CC1 coefficient: " + newCC1);
-    console.log("CC2 coefficient: " + newCC2);
-    console.log("CC3 coefficient: " + newCC3);
-    setIsAddSubjectModalVisible(false);
+  const addSubject = () => {    
+    const newSubject = {
+      name: newName,
+      get coefficient() {
+        let sum = 0;
+
+        if (this.CC1Coef !== 0) {
+          sum += this.CC1Coef;
+        }
+
+        if (this.CC2Coef !== 0) {
+          sum += this.CC2Coef;
+        }
+
+        if (this.CC3Coef !== 0) {
+          sum += this.CC3Coef;
+        }
+
+        return sum;
+      },
+      CC1Coef: parseFloat(newCC1),
+      CC2Coef: parseFloat(newCC2),
+      CC3Coef: parseFloat(newCC3)
+    }
+
+    const newSubjectsList = [...subjectsList, newSubject];
+    updateSubjectsList(newSubjectsList);
+
+    closeAddSubject();
   }
 
   const screenHeight = Dimensions.get('window').height;
@@ -313,12 +327,14 @@ export default function HomeScreen() {
 
   return (
     <View style = {homeCSS.container}>
-      {/* TODO: Use map function to render all Subject components */}
       <ScrollView style = {{maxHeight: scrollViewHeight}}>
         {subjectsList.map((subjectProps, index) => (
           <Subject 
-            key = {index} 
+            key = {index}
+            subjectKey = {index}
             subjectProps = {subjectProps}
+            subjectsList = {subjectsList}
+            updateSubjectsList = {updateSubjectsList}
           />
         ))}
       </ScrollView>
