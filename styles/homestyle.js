@@ -5,35 +5,64 @@ export const homeCSS = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#171717",
     flex: 1,
-    paddingTop: 50
+    paddingTop: 40,
+    paddingBottom: 20
+  },
+
+  // Loading page CSS
+  loadingContainer: {
+    backgroundColor: "#171717",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  appName: {
+    fontSize: 70,
+    color: "#DEDEDE",
+  },
+
+  whoMade: {
+    fontSize: 20,
+    color: "#DEDEDE",
+    position: "absolute",
+    top: 730
+  },
+
+  version: {
+    fontSize: 20,
+    color: "#DEDEDE",
+    position: "absolute",
+    top: 760
+  },
+
+  // Rest
+  totals: {
+    alignItems: "center",
+    height: 140,
+    justifyContent: "center",
+    left: 5,
+    paddingTop: 10,
+    position: "absolute",
+    top: 658,
+    width: 250,
+  },
+  
+  totalsText: {
+    color: "#DEDEDE",
+    fontSize: 18,
+    fontWeight: "bold"
   },
 
   touchable: {
     borderRadius: 50,
     height: 80, 
     position: "absolute", 
-    right: 20, 
-    top: 740,
+    right: 0, 
+    top: 695,
     width: 80
   },
-
-  totals: {
-    alignItems: "center",
-    height: 140,
-    justifyContent: "center",
-    left: 20,
-    paddingTop: 10,
-    position: "absolute",
-    top: 698,
-    width: 250,
-  },
-
-  totalsText: {
-    color: "#E5E5E5",
-    fontSize: 18,
-    fontWeight: "bold"
-  },
-
+  
   add: {
     alignItems: "center",
     backgroundColor: "#1F5435",
@@ -45,14 +74,7 @@ export const homeCSS = StyleSheet.create({
   },
 
   text: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 40,
-  },
-
-  // REMOVE: Remove this. It's only for an example
-  homeText: {
-    color: "#E5E5E5",
-    fontSize: 30,
-    paddingBottom: 50
   },
 })

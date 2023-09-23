@@ -3,15 +3,16 @@ import { StyleSheet } from 'react-native';
 export const subjectCSS = StyleSheet.create({
   container: {
     backgroundColor: "#171717",
-    borderColor: "#E5E5E5",
+    borderColor: "#DEDEDE",
     borderWidth: 2,
     marginBottom: 30,
     width: 350
   },
 
+  // Top part
   top: {
     borderBottomWidth: 2,
-    borderColor: "#E5E5E5",
+    borderColor: "#DEDEDE",
     flexDirection: "row",
     justifyContent: "space-between",
     paddingBottom: 3,
@@ -30,19 +31,20 @@ export const subjectCSS = StyleSheet.create({
   },
 
   topText: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 25,
     fontWeight: "bold"
   },
 
+  // Middle part
   middle: {
     borderBottomWidth: 2,
-    borderColor: "#E5E5E5",
+    borderColor: "#DEDEDE",
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 3,
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingLeft: 8,
+    paddingRight: 8
   },
 
   middleView: {
@@ -51,7 +53,7 @@ export const subjectCSS = StyleSheet.create({
   },
 
   middleText: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 20,
     textAlign: "center"
   },
@@ -68,18 +70,19 @@ export const subjectCSS = StyleSheet.create({
   },
 
   xletter: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 70,
     textAlign: "center"
   },
 
+  // Bottom part
   bottom: {
     paddingTop: 8,
     paddingBottom: 8
   },
 
   bottomText: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center"
@@ -88,7 +91,7 @@ export const subjectCSS = StyleSheet.create({
   // Change modal CSS
   changeButton: {
     alignItems: "center",
-    borderColor: "#E5E5E5",
+    borderColor: "#DEDEDE",
     borderRadius: 10,
     borderWidth: 2,
     marginTop: 50,
@@ -97,7 +100,7 @@ export const subjectCSS = StyleSheet.create({
   },
 
   changeButtonText: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 30,
     fontWeight: "bold"
   },

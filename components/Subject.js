@@ -7,9 +7,13 @@ import { FontAwesome } from '@expo/vector-icons';
 
 export default function Subject({ subjectKey, subjectProps, subjectsList, updateSubjectsList }) {
   // Values from inputs
-  const [CC1Score, setCC1Score] = useState(183);
-  const [CC2Score, setCC2Score] = useState(183);
-  const [CC3Score, setCC3Score] = useState(183);
+  const [CC1Score, setCC1Score] = useState(subjectProps.CC1Score);
+  const [CC2Score, setCC2Score] = useState(subjectProps.CC2Score);
+  const [CC3Score, setCC3Score] = useState(subjectProps.CC3Score);
+
+  const [CC1ScoreStringified, setCC1ScoreStringified] = useState(subjectProps.CC1Score !== 183 ? subjectProps.CC1Score.toString() : "");
+  const [CC2ScoreStringified, setCC2ScoreStringified] = useState(subjectProps.CC2Score !== 183 ? subjectProps.CC2Score.toString() : "");
+  const [CC3ScoreStringified, setCC3ScoreStringified] = useState(subjectProps.CC3Score !== 183 ? subjectProps.CC3Score.toString() : "");
   
   // Computable values
   const [CC1Final, setCC1Final] = useState(183);
@@ -37,6 +41,7 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
   const [deletionConfirm, setDeletionConfirm] = useState(0);
   const [triggerUseEffect, setTriggerUseEffect] = useState(0);
 
+  // IMPORTANT: The update is very slow
   useEffect(() => {
     // Calculates CC1 score and percentage
     if (CC1Score !== 183 && subjectProps.CC1Coef !== 0) {
@@ -51,6 +56,7 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
       setCC1Percentage(formattedCC1Percentage);
     } else {
       setCC1Score(183);
+      setCC1ScoreStringified("");
       setCC1Final(183);
       setCC1Percentage(183);
     }
@@ -68,6 +74,7 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
       setCC2Percentage(formattedCC2Percentage);
     } else {
       setCC2Score(183);
+      setCC2ScoreStringified("");
       setCC2Final(183);
       setCC2Percentage(183);
     }
@@ -85,6 +92,7 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
       setCC3Percentage(formattedCC3Percentage);
     } else {
       setCC3Score(183);
+      setCC3ScoreStringified("");
       setCC3Final(183);
       setCC3Percentage(183);
     }
@@ -126,29 +134,45 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
     } else {
       setTotalPercentage(183);
     }
+
+    // Updates the total amount of points for Home screen
+    const newSubjectsList = [...subjectsList];
+    newSubjectsList[subjectKey].CC1Score = CC1Score;
+    newSubjectsList[subjectKey].CC2Score = CC2Score;
+    newSubjectsList[subjectKey].CC3Score = CC3Score;
+    newSubjectsList[subjectKey].subjectTotal = total !== 183 ? total : 0;
+    updateSubjectsList(newSubjectsList);
+
   }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total, triggerUseEffect, subjectProps]);
 
+  // Scores change handlers
   const CC1Handler = (CC1result) => {
     if (CC1result === ""){
-      setCC1Score(183);  
+      setCC1Score(183);
+      setCC1ScoreStringified("");
     } else {
       setCC1Score(CC1result);
+      setCC1ScoreStringified(CC1result.toString());
     }
   }
 
   const CC2Handler = (CC2result) => {
     if (CC2result === ""){
-      setCC2Score(183);  
+      setCC2Score(183);
+      setCC2ScoreStringified("");
     } else {
-      setCC2Score(CC2result); 
+      setCC2Score(CC2result);
+      setCC2ScoreStringified(CC2result.toString());
     }
   }
 
   const CC3Handler = (CC3result) => {
     if (CC3result === ""){
-      setCC3Score(183);  
+      setCC3Score(183);
+      setCC3ScoreStringified("");
     } else {
-      setCC3Score(CC3result); 
+      setCC3Score(CC3result);
+      setCC3ScoreStringified(CC3result.toString());
     }
   }
 
@@ -183,6 +207,11 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
       newSubjectsList[subjectKey].CC3Coef = parseFloat(currentCC3);
     else
       newSubjectsList[subjectKey].CC3Coef = 0;
+
+    newSubjectsList[subjectKey].CC1Score = CC1Score;
+    newSubjectsList[subjectKey].CC2Score = CC2Score;
+    newSubjectsList[subjectKey].CC3Score = CC3Score;
+    newSubjectsList[subjectKey].subjectTotal = total;
 
     updateSubjectsList(newSubjectsList);
 
@@ -234,10 +263,11 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
                 onChangeText = {CC1Handler}
                 keyboardType = "numeric"
                 style = {subjectCSS.middleInput}
+                value = {CC1ScoreStringified}
               />
 
               <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC1Final !== 183 ? CC1Final : "?"}</Text> / {subjectProps.CC1Coef} </Text>
-              <Text style = {subjectCSS.middleText}> {CC1Percentage !== 183 ? CC1Percentage : "?"} % </Text>
+              <Text style = {[subjectCSS.middleText, {color: "#E6D41F"}]}> {CC1Percentage !== 183 ? CC1Percentage : "?"} % </Text>
             </View>
           )}
         </View>
@@ -255,10 +285,11 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
                 onChangeText = {CC2Handler}
                 keyboardType = "numeric"
                 style = {subjectCSS.middleInput}
+                value = {CC2ScoreStringified}
               />
 
               <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC2Final !== 183 ? CC2Final : "?"}</Text> / {subjectProps.CC2Coef} </Text>
-              <Text style = {subjectCSS.middleText}> {CC2Percentage !== 183 ? CC2Percentage : "?"} % </Text>
+              <Text style = {[subjectCSS.middleText, {color: "#E6D41F"}]}> {CC2Percentage !== 183 ? CC2Percentage : "?"} % </Text>
             </View>
           )}
         </View>
@@ -276,10 +307,11 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
                 onChangeText = {CC3Handler}
                 keyboardType = "numeric"
                 style = {subjectCSS.middleInput}
+                value = {CC3ScoreStringified}
               />
               
               <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC3Final !== 183 ? CC3Final : "?"}</Text> / {subjectProps.CC3Coef} </Text>
-              <Text style = {subjectCSS.middleText}> {CC3Percentage !== 183 ? CC3Percentage : "?"} % </Text>
+              <Text style = {[subjectCSS.middleText, {color: "#E6D41F"}]}> {CC3Percentage !== 183 ? CC3Percentage : "?"} % </Text>
             </View>
           )}
         </View>
