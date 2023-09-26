@@ -36,6 +36,19 @@ export const homeCSS = StyleSheet.create({
     top: 760
   },
 
+  // Empty array text CSS
+  emptyArrayView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  emptyArrayText: {
+    color: "#E5E5E5",
+    fontSize: 30,
+    textAlign: "center",
+  },
+
   // Rest
   totals: {
     alignItems: "center",
@@ -54,12 +67,13 @@ export const homeCSS = StyleSheet.create({
     fontWeight: "bold"
   },
 
+  // + button (when the array is not empty)
   touchable: {
     borderRadius: 50,
     height: 80, 
     position: "absolute", 
-    right: 0, 
-    top: 695,
+    right: 10, 
+    top: 733,
     width: 80
   },
   
@@ -77,4 +91,28 @@ export const homeCSS = StyleSheet.create({
     color: "#DEDEDE",
     fontSize: 40,
   },
+
+  // + button CSS (when the array is empty)
+  emptyTouchable: {
+    borderRadius: 50,
+    height: 100, 
+    position: "absolute", 
+    top: 600,
+    width: 100
+  },
+
+  emptyAdd: {
+    alignItems: "center",
+    backgroundColor: "#1F5435",
+    borderRadius: 50,
+    height: 100,
+    padding: 6,
+    position: "absolute",
+    width: 100
+  },
+
+  emptyText: {
+    color: "#DEDEDE",
+    fontSize: 60, // FIXME: Modify this
+  }
 })

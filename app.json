@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "scorelator",
+    "icon": "./scorelator_logo.png",
     "slug": "scorelator",
     "version": "1.0.0",
     "assetBundlePatterns": [
