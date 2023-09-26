@@ -19,7 +19,7 @@ export const modalCSS = StyleSheet.create({
   },
 
   addingInfoText: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 38,
     fontWeight: "bold"
   },
@@ -34,16 +34,16 @@ export const modalCSS = StyleSheet.create({
   },
 
   singleInputText: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 30,
     fontWeight: "bold",
   },
 
   textInput: {
-    backgroundColor: "#171717", // FIXME: Change this color
+    backgroundColor: "#171717",
     borderColor: "#A9A9A9",
     borderWidth: 2,
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 25,
     marginLeft: 25,
     textAlign: "center",
@@ -51,10 +51,10 @@ export const modalCSS = StyleSheet.create({
   },
 
   textInputName: {
-    backgroundColor: "#171717", // FIXME: Change this color
+    backgroundColor: "#171717",
     borderColor: "#A9A9A9",
     borderWidth: 2,
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 25,
     paddingLeft: 7,
     paddingRight: 7,
@@ -69,7 +69,7 @@ export const modalCSS = StyleSheet.create({
 
   addButton: {
     alignItems: "center",
-    borderColor: "#E5E5E5",
+    borderColor: "#DEDEDE",
     borderRadius: 10,
     borderWidth: 2,
     marginTop: 50,
@@ -78,7 +78,7 @@ export const modalCSS = StyleSheet.create({
   },
 
   addButtonText: {
-    color: "#E5E5E5",
+    color: "#DEDEDE",
     fontSize: 35,
     fontWeight: "bold"
   }

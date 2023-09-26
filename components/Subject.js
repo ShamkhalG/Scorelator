@@ -5,13 +5,16 @@ import { modalCSS } from "../styles/globalstyle";
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
-export default function Subject({ subjectProps }) {
-  // TODO: Add warning about valid scores being from 0 to 20
+export default function Subject({ subjectKey, subjectProps, subjectsList, updateSubjectsList }) {
   // Values from inputs
-  const [CC1Score, setCC1Score] = useState(183);
-  const [CC2Score, setCC2Score] = useState(183);
-  const [CC3Score, setCC3Score] = useState(183);
+  const [CC1Score, setCC1Score] = useState(subjectProps.CC1Score);
+  const [CC2Score, setCC2Score] = useState(subjectProps.CC2Score);
+  const [CC3Score, setCC3Score] = useState(subjectProps.CC3Score);
 
+  const [CC1ScoreStringified, setCC1ScoreStringified] = useState(subjectProps.CC1Score !== 183 ? subjectProps.CC1Score.toString() : "");
+  const [CC2ScoreStringified, setCC2ScoreStringified] = useState(subjectProps.CC2Score !== 183 ? subjectProps.CC2Score.toString() : "");
+  const [CC3ScoreStringified, setCC3ScoreStringified] = useState(subjectProps.CC3Score !== 183 ? subjectProps.CC3Score.toString() : "");
+  
   // Computable values
   const [CC1Final, setCC1Final] = useState(183);
   const [CC1Percentage, setCC1Percentage] = useState(183);
@@ -38,6 +41,7 @@ export default function Subject({ subjectProps }) {
   const [deletionConfirm, setDeletionConfirm] = useState(0);
   const [triggerUseEffect, setTriggerUseEffect] = useState(0);
 
+  // IMPORTANT: The update is very slow
   useEffect(() => {
     // Calculates CC1 score and percentage
     if (CC1Score !== 183 && subjectProps.CC1Coef !== 0) {
@@ -52,6 +56,7 @@ export default function Subject({ subjectProps }) {
       setCC1Percentage(formattedCC1Percentage);
     } else {
       setCC1Score(183);
+      setCC1ScoreStringified("");
       setCC1Final(183);
       setCC1Percentage(183);
     }
@@ -69,6 +74,7 @@ export default function Subject({ subjectProps }) {
       setCC2Percentage(formattedCC2Percentage);
     } else {
       setCC2Score(183);
+      setCC2ScoreStringified("");
       setCC2Final(183);
       setCC2Percentage(183);
     }
@@ -86,6 +92,7 @@ export default function Subject({ subjectProps }) {
       setCC3Percentage(formattedCC3Percentage);
     } else {
       setCC3Score(183);
+      setCC3ScoreStringified("");
       setCC3Final(183);
       setCC3Percentage(183);
     }
@@ -127,29 +134,45 @@ export default function Subject({ subjectProps }) {
     } else {
       setTotalPercentage(183);
     }
+
+    // Updates the total amount of points for Home screen
+    const newSubjectsList = [...subjectsList];
+    newSubjectsList[subjectKey].CC1Score = CC1Score;
+    newSubjectsList[subjectKey].CC2Score = CC2Score;
+    newSubjectsList[subjectKey].CC3Score = CC3Score;
+    newSubjectsList[subjectKey].subjectTotal = total !== 183 ? total : 0;
+    updateSubjectsList(newSubjectsList);
+
   }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total, triggerUseEffect, subjectProps]);
 
+  // Scores change handlers
   const CC1Handler = (CC1result) => {
     if (CC1result === ""){
-      setCC1Score(183);  
+      setCC1Score(183);
+      setCC1ScoreStringified("");
     } else {
       setCC1Score(CC1result);
+      setCC1ScoreStringified(CC1result.toString());
     }
   }
 
   const CC2Handler = (CC2result) => {
     if (CC2result === ""){
-      setCC2Score(183);  
+      setCC2Score(183);
+      setCC2ScoreStringified("");
     } else {
-      setCC2Score(CC2result); 
+      setCC2Score(CC2result);
+      setCC2ScoreStringified(CC2result.toString());
     }
   }
 
   const CC3Handler = (CC3result) => {
     if (CC3result === ""){
-      setCC3Score(183);  
+      setCC3Score(183);
+      setCC3ScoreStringified("");
     } else {
-      setCC3Score(CC3result); 
+      setCC3Score(CC3result);
+      setCC3ScoreStringified(CC3result.toString());
     }
   }
 
@@ -167,29 +190,30 @@ export default function Subject({ subjectProps }) {
   const CC3ChangeHandler = (enteredCC3Coef) => setCurrentCC3(enteredCC3Coef);
 
   const changeSubject = () => {
-    // TODO: It should be able to pass updated subjectProps back to Subject component
-    // REMOVE: Console.log
-    console.log("Changed subject settings. Closing the window");
-    console.log("Name: " + currentName);
-    console.log("CC1 coefficient: " + currentCC1);
-    console.log("CC2 coefficient: " + currentCC2);
-    console.log("CC3 coefficient: " + currentCC3);
-
-    subjectProps.name = currentName;
+    const newSubjectsList = [...subjectsList];
+    newSubjectsList[subjectKey].name = currentName;
+    
     if (currentCC1 !== "")
-      subjectProps.CC1Coef = parseFloat(currentCC1);
+      newSubjectsList[subjectKey].CC1Coef = parseFloat(currentCC1);
     else
-      subjectProps.CC1Coef = 0;
+      newSubjectsList[subjectKey].CC1Coef = 0;
 
     if (currentCC2 !== "")
-      subjectProps.CC2Coef = parseFloat(currentCC2);
+      newSubjectsList[subjectKey].CC2Coef = parseFloat(currentCC2);
     else
-      subjectProps.CC2Coef = 0;
+      newSubjectsList[subjectKey].CC2Coef = 0;
 
     if (currentCC3 !== "")
-      subjectProps.CC3Coef = parseFloat(currentCC3);
+      newSubjectsList[subjectKey].CC3Coef = parseFloat(currentCC3);
     else
-      subjectProps.CC3Coef = 0;
+      newSubjectsList[subjectKey].CC3Coef = 0;
+
+    newSubjectsList[subjectKey].CC1Score = CC1Score;
+    newSubjectsList[subjectKey].CC2Score = CC2Score;
+    newSubjectsList[subjectKey].CC3Score = CC3Score;
+    newSubjectsList[subjectKey].subjectTotal = total;
+
+    updateSubjectsList(newSubjectsList);
 
     // Triggers useEffect to recalculate values
     if (triggerUseEffect === 0)
@@ -200,9 +224,10 @@ export default function Subject({ subjectProps }) {
   }
 
   const deleteSubject = () => {
-    // TODO: It should be able to delete the subject from the list
-    // REMOVE: Console.log
-    console.log("Oops. Accidentally deleted the subject.");
+    const newSubjectsList = [...subjectsList];
+    newSubjectsList.splice(subjectKey, 1);
+    updateSubjectsList(newSubjectsList);
+
     closeSetting();
   }
 
@@ -213,10 +238,9 @@ export default function Subject({ subjectProps }) {
   return (
     <View style = {subjectCSS.container}>
       <View style = {subjectCSS.top}>
-        {/* QUESTION: If the name is too long, it might not fit in the table */}
-        <Text style = {subjectCSS.topText}> {subjectProps.name} </Text>
+        <Text style = {[subjectCSS.topText, {marginLeft: 5, maxWidth: "85%"}, subjectProps.name.length > 25 ? {fontSize: 20, textAlign: "center"} : subjectProps.name.length > 20 ? {fontSize: 20}: null]}> {subjectProps.name} </Text>
         <View style = {subjectCSS.topRight}>
-          <Text style = {subjectCSS.topText}> {subjectProps.coefficient} </Text>
+          <Text style = {[subjectCSS.topText, {alignSelf: "center"}]}> {subjectProps.coefficient} </Text>
           <View style={subjectCSS.setting}>
             <TouchableOpacity onPress = {openSetting}>
               <MaterialIcons name="settings" size={28} color="#E5E5E5" />
@@ -239,10 +263,11 @@ export default function Subject({ subjectProps }) {
                 onChangeText = {CC1Handler}
                 keyboardType = "numeric"
                 style = {subjectCSS.middleInput}
+                value = {CC1ScoreStringified}
               />
 
               <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC1Final !== 183 ? CC1Final : "?"}</Text> / {subjectProps.CC1Coef} </Text>
-              <Text style = {subjectCSS.middleText}> {CC1Percentage !== 183 ? CC1Percentage : "?"} % </Text>
+              <Text style = {[subjectCSS.middleText, {color: "#E6D41F"}]}> {CC1Percentage !== 183 ? CC1Percentage : "?"} % </Text>
             </View>
           )}
         </View>
@@ -260,10 +285,11 @@ export default function Subject({ subjectProps }) {
                 onChangeText = {CC2Handler}
                 keyboardType = "numeric"
                 style = {subjectCSS.middleInput}
+                value = {CC2ScoreStringified}
               />
 
               <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC2Final !== 183 ? CC2Final : "?"}</Text> / {subjectProps.CC2Coef} </Text>
-              <Text style = {subjectCSS.middleText}> {CC2Percentage !== 183 ? CC2Percentage : "?"} % </Text>
+              <Text style = {[subjectCSS.middleText, {color: "#E6D41F"}]}> {CC2Percentage !== 183 ? CC2Percentage : "?"} % </Text>
             </View>
           )}
         </View>
@@ -281,10 +307,11 @@ export default function Subject({ subjectProps }) {
                 onChangeText = {CC3Handler}
                 keyboardType = "numeric"
                 style = {subjectCSS.middleInput}
+                value = {CC3ScoreStringified}
               />
               
               <Text style = {[subjectCSS.middleText, {marginTop: 5}]}> <Text style = {{ color: "#51CC8F" }}>{CC3Final !== 183 ? CC3Final : "?"}</Text> / {subjectProps.CC3Coef} </Text>
-              <Text style = {subjectCSS.middleText}> {CC3Percentage !== 183 ? CC3Percentage : "?"} % </Text>
+              <Text style = {[subjectCSS.middleText, {color: "#E6D41F"}]}> {CC3Percentage !== 183 ? CC3Percentage : "?"} % </Text>
             </View>
           )}
         </View>
