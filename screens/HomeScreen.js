@@ -45,7 +45,7 @@ export default function HomeScreen() {
         setTimeout(() => setLoading(false), 2000);
       }
     } catch (error) {
-      console.log("Error is: ", error);
+      console.log("Error is: ", error); // IMPORTANT: Add a message in case of error in fetching data
     }
   }
   
