@@ -6,7 +6,12 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "87819a2e-2a3b-46a9-9fc5-3b5af5b29a93"
+      }
+    }
   },
   "name": "scorelator"
 }

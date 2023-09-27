@@ -52,8 +52,8 @@ export default function HomeScreen() {
   // Saves data into the database
   useEffect(() => {
     AsyncStorage.setItem("SL", JSON.stringify(subjectsList))
-    .then(() => console.log("Data saved successfully."))
-    .catch((error) => console.log("Error saving data. ", error));
+    .then(() => console.log("Data saved successfully.")) // QUESTION: Add a message in case of success
+    .catch((error) => console.log("Error saving data. ", error)); // IMPORTANT: Add a message in case of error
   }, [subjectsList]);
   
   // Fetchs data into the database
@@ -116,7 +116,6 @@ export default function HomeScreen() {
       subjectTotal: 0
     }
 
-    console.log("CC1 coef: " + newCC1);
     const newSubjectsList = [...subjectsList, newSubject];
     updateSubjectsList(newSubjectsList);
     setIsEmpty(false);
