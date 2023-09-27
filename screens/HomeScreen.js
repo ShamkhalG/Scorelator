@@ -7,8 +7,14 @@ import { StatusBar } from "expo-status-bar";
 import Subject from "../components/Subject";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/* List of potential TODO:
+  * Making available to contact us (you)
+  * Displaying the name and the version of app on the top of the screen
+*/
+
 export default function HomeScreen() {
   const [isAddSubjectModalVisible, setIsAddSubjectModalVisible] = useState(false);
+  const DEVELOPMENT_MODE = false;
   const [isEmpty, setIsEmpty] = useState(true);
   const [loading, setLoading] = useState(true);
   const TOTALS_HEIGHT = 140;
@@ -45,20 +51,35 @@ export default function HomeScreen() {
         setTimeout(() => setLoading(false), 2000);
       }
     } catch (error) {
-      console.log("Error is: ", error); // IMPORTANT: Add a message in case of error in fetching data
+      console.log("Error is: ", error); // IMPORTANT: Add a message in case of error
     }
   }
   
+  // Deletes the data from database (for development)
+  const resetData = async () => {
+    try {
+      await AsyncStorage.removeItem("SL");
+      console.log("Data was cleared successfully.");
+    } catch (error) {
+      console.log("Error in cleaning data. The error: " + error);
+    }
+  }
+
   // Saves data into the database
   useEffect(() => {
-    AsyncStorage.setItem("SL", JSON.stringify(subjectsList))
-    .then(() => console.log("Data saved successfully.")) // QUESTION: Add a message in case of success
-    .catch((error) => console.log("Error saving data. ", error)); // IMPORTANT: Add a message in case of error
+    if (loading === false)
+    {
+      AsyncStorage.setItem("SL", JSON.stringify(subjectsList))
+      .then(() => console.log("Data saved successfully."))
+      .catch((error) => console.log("Error saving data. ", error)); // IMPORTANT: Add a message in case of error
+    }
   }, [subjectsList]);
   
   // Fetchs data into the database
   useEffect(() => {
     fetchData();
+    if (DEVELOPMENT_MODE === true)
+      resetData();
   }, []);
 
   // For the rest of application
@@ -144,11 +165,6 @@ export default function HomeScreen() {
         <Text style = {homeCSS.whoMade}> Made by Shamkhal Guliyev </Text>
         <Text style = {homeCSS.version}> v1.3.0 </Text>
       </View>
-
-      {/* QUESTION: Think about adding Scorelator v1.3.0 on the top of the screen ;) */}
-      {/* <View>
-        <Text> Scorelator v1.0.0</Text>
-      </View> */}
 
       {isEmpty === true ? (
         <View style = {loading === true ? {display: "none"} : homeCSS.emptyArrayView}>
