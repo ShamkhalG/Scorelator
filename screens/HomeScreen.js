@@ -49,6 +49,9 @@ export default function HomeScreen() {
         else
           setIsEmpty(false);
         setTimeout(() => setLoading(false), 2000);
+      } else {
+        setIsEmpty(true);
+        setTimeout(() => setLoading(false), 2000);
       }
     } catch (error) {
       console.log("Error is: ", error); // IMPORTANT: Add a message in case of error
@@ -163,7 +166,7 @@ export default function HomeScreen() {
       <View style = {loading === true ? homeCSS.loadingContainer : {display: "none"}}>
         <Text style = {homeCSS.appName}> Scorelator </Text>
         <Text style = {homeCSS.whoMade}> Made by Shamkhal Guliyev </Text>
-        <Text style = {homeCSS.version}> v1.3.0 </Text>
+        <Text style = {homeCSS.version}> v1.0.0 </Text>
       </View>
 
       {isEmpty === true ? (
@@ -172,6 +175,7 @@ export default function HomeScreen() {
           <Text style = {[homeCSS.emptyArrayText, {marginTop: 30}]}> Press + button to add a subject. </Text>
         </View>
       ) : (
+        // TODO: When removing all existing subjects, the screen must set "isEmpty" to "true"
         <View style = {loading === true ? {display: "none"} : {display: "flex"}}>
           <ScrollView style = {{maxHeight: scrollViewHeight}}>
             {subjectsList.map((subjectProps, index) => (

@@ -212,6 +212,7 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
     newSubjectsList[subjectKey].CC2Score = CC2Score;
     newSubjectsList[subjectKey].CC3Score = CC3Score;
     newSubjectsList[subjectKey].subjectTotal = total;
+    // FIXME: Total amount of points must be recalculated
 
     updateSubjectsList(newSubjectsList);
 
