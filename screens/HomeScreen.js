@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen() {
   const [isAddSubjectModalVisible, setIsAddSubjectModalVisible] = useState(false);
-  const DEVELOPMENT_MODE = false;
+  const DEVELOPMENT_MODE = false; // IMPORTANT: Change this!!!!!!!!!
   const [isEmpty, setIsEmpty] = useState(true);
   const [loading, setLoading] = useState(true);
   const TOTALS_HEIGHT = 140;
@@ -75,6 +75,10 @@ export default function HomeScreen() {
       AsyncStorage.setItem("SL", JSON.stringify(subjectsList))
       .then(() => console.log("Data saved successfully."))
       .catch((error) => console.log("Error saving data. ", error)); // IMPORTANT: Add a message in case of error
+
+      if (subjectsList.length === 0){
+        setIsEmpty(true);
+      }
     }
   }, [subjectsList]);
   
@@ -159,6 +163,7 @@ export default function HomeScreen() {
   return (
     <View style = {homeCSS.container}>
       <StatusBar 
+        // FIXME: This thing doesn't work
         backgroundColor = '#171717'
         barStyle = 'light-content'
       />
@@ -166,7 +171,7 @@ export default function HomeScreen() {
       <View style = {loading === true ? homeCSS.loadingContainer : {display: "none"}}>
         <Text style = {homeCSS.appName}> Scorelator </Text>
         <Text style = {homeCSS.whoMade}> Made by Shamkhal Guliyev </Text>
-        <Text style = {homeCSS.version}> v1.0.0 </Text>
+        <Text style = {homeCSS.version}> v1.0.1 </Text>
       </View>
 
       {isEmpty === true ? (
@@ -175,7 +180,6 @@ export default function HomeScreen() {
           <Text style = {[homeCSS.emptyArrayText, {marginTop: 30}]}> Press + button to add a subject. </Text>
         </View>
       ) : (
-        // TODO: When removing all existing subjects, the screen must set "isEmpty" to "true"
         <View style = {loading === true ? {display: "none"} : {display: "flex"}}>
           <ScrollView style = {{maxHeight: scrollViewHeight}}>
             {subjectsList.map((subjectProps, index) => (

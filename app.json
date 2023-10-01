@@ -3,7 +3,7 @@
     "name": "Scorelator",
     "icon": "./scorelator_logo.png",
     "slug": "scorelator",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "assetBundlePatterns": [
       "**/*"
     ],

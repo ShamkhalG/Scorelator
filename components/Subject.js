@@ -208,11 +208,21 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
     else
       newSubjectsList[subjectKey].CC3Coef = 0;
 
-    newSubjectsList[subjectKey].CC1Score = CC1Score;
-    newSubjectsList[subjectKey].CC2Score = CC2Score;
-    newSubjectsList[subjectKey].CC3Score = CC3Score;
-    newSubjectsList[subjectKey].subjectTotal = total;
-    // FIXME: Total amount of points must be recalculated
+    newSubjectsList[subjectKey].CC1Score = newSubjectsList[subjectKey].CC1Coef !== 0 ? CC1Score : 183;
+    newSubjectsList[subjectKey].CC2Score = newSubjectsList[subjectKey].CC2Coef !== 0 ? CC2Score : 183;
+    newSubjectsList[subjectKey].CC3Score = newSubjectsList[subjectKey].CC3Coef !== 0 ? CC3Score : 183;
+    
+    let newTotal = 0;
+    if (newSubjectsList[subjectKey].CC1Coef !== 0)
+      newTotal += CC1Final;
+
+    if (newSubjectsList[subjectKey].CC2Coef !== 0)
+      newTotal += CC2Final;
+
+    if (newSubjectsList[subjectKey].CC3Coef !== 0)
+      newTotal += CC3Final;
+
+    newSubjectsList[subjectKey].subjectTotal = newTotal;
 
     updateSubjectsList(newSubjectsList);
 
@@ -225,6 +235,7 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
   }
 
   const deleteSubject = () => {
+    // FIXME: Score of the deleted object is shifted to the subject beneath it
     const newSubjectsList = [...subjectsList];
     newSubjectsList.splice(subjectKey, 1);
     updateSubjectsList(newSubjectsList);
