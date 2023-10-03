@@ -17,6 +17,7 @@ export default function HomeScreen() {
   const DEVELOPMENT_MODE = false; // IMPORTANT: Change this!!!!!!!!!
   const [isEmpty, setIsEmpty] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [restartRequired, setRestartRequired] = useState(false);
   const TOTALS_HEIGHT = 140;
   const TOTAL_TWENTY = 20;
 
@@ -33,9 +34,18 @@ export default function HomeScreen() {
   
   const [subjectsList, setSubjectsList] = useState([]);
 
-  const updateSubjectsList = (newSubjectsList) => {
-    setSubjectsList(newSubjectsList);
-  };  
+  const updateSubjectsList = (newSubjectsList, isDelete) => {
+    if (isDelete){
+      console.log("Setting an empty array."); // REMOVE: Console.log
+      setSubjectsList([]);
+      setSubjectsList(newSubjectsList);
+      setRestartRequired(true);
+      // FIXME: The app must restart to apply changes
+    } else {
+      console.log("Subject has been updated"); // REMOVE: Console.log
+      setSubjectsList(newSubjectsList);
+    }
+  };
 
   // Fetchs data
   const fetchData = async () => {
@@ -145,7 +155,7 @@ export default function HomeScreen() {
     }
 
     const newSubjectsList = [...subjectsList, newSubject];
-    updateSubjectsList(newSubjectsList);
+    updateSubjectsList(newSubjectsList, false);
     setIsEmpty(false);
 
     // Resets the values for adding a subject
@@ -171,15 +181,19 @@ export default function HomeScreen() {
       <View style = {loading === true ? homeCSS.loadingContainer : {display: "none"}}>
         <Text style = {homeCSS.appName}> Scorelator </Text>
         <Text style = {homeCSS.whoMade}> Made by Shamkhal Guliyev </Text>
-        <Text style = {homeCSS.version}> v1.0.1 </Text>
+        <Text style = {homeCSS.version}> v1.0.2 </Text>
       </View>
 
-      {isEmpty === true ? (
+      {restartRequired === true ? (
+        <View style = {homeCSS.emptyArrayView}>
+          <Text style = {homeCSS.emptyArrayText}> Please restart the app to apply changes </Text>
+        </View>
+      ) : isEmpty === true ? (
         <View style = {loading === true ? {display: "none"} : homeCSS.emptyArrayView}>
           <Text style = {homeCSS.emptyArrayText}> Currently, there are no subjets to display. </Text>
           <Text style = {[homeCSS.emptyArrayText, {marginTop: 30}]}> Press + button to add a subject. </Text>
         </View>
-      ) : (
+      ) : restartRequired === false ? (
         <View style = {loading === true ? {display: "none"} : {display: "flex"}}>
           <ScrollView style = {{maxHeight: scrollViewHeight}}>
             {subjectsList.map((subjectProps, index) => (
@@ -200,10 +214,10 @@ export default function HomeScreen() {
             <Text style = {homeCSS.totalsText}> Total percentage: {finalPercentage} % </Text>
           </View>
         </View>  
-      )}
+      ) : null}
 
       {/* + button to add a new subject to the list */}
-      <TouchableOpacity style = {loading === true ? {display: "none"} : isEmpty === true ? homeCSS.emptyTouchable : homeCSS.touchable} onPress = {openAddSubject}>
+      <TouchableOpacity style = {loading === true || restartRequired === true ? {display: "none"} : isEmpty === true ? homeCSS.emptyTouchable : homeCSS.touchable} onPress = {openAddSubject}>
         <View style = {isEmpty === true ? homeCSS.emptyAdd : homeCSS.add}>
           <Text style = {isEmpty === true ? homeCSS.emptyText : homeCSS.text}>+</Text>
         </View>

@@ -141,7 +141,7 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
     newSubjectsList[subjectKey].CC2Score = CC2Score;
     newSubjectsList[subjectKey].CC3Score = CC3Score;
     newSubjectsList[subjectKey].subjectTotal = total !== 183 ? total : 0;
-    updateSubjectsList(newSubjectsList);
+    updateSubjectsList(newSubjectsList, false);
 
   }, [CC1Score, CC2Score, CC3Score, CC1Final, CC2Final, CC3Final, total, triggerUseEffect, subjectProps]);
 
@@ -224,7 +224,7 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
 
     newSubjectsList[subjectKey].subjectTotal = newTotal;
 
-    updateSubjectsList(newSubjectsList);
+    updateSubjectsList(newSubjectsList, false);
 
     // Triggers useEffect to recalculate values
     if (triggerUseEffect === 0)
@@ -238,9 +238,9 @@ export default function Subject({ subjectKey, subjectProps, subjectsList, update
     // FIXME: Score of the deleted object is shifted to the subject beneath it
     const newSubjectsList = [...subjectsList];
     newSubjectsList.splice(subjectKey, 1);
-    updateSubjectsList(newSubjectsList);
-
+    
     closeSetting();
+    setTimeout(() => updateSubjectsList(newSubjectsList, true), 2000);
   }
 
   const keyboardRemover = () => {
